@@ -151,11 +151,9 @@ const modalMeta = document.querySelector("#modalMeta");
 const modalTitle = document.querySelector("#modalTitle");
 const modalDescription = document.querySelector("#modalDescription");
 const modalPlayer = document.querySelector("#modalPlayer");
-const mobilePlayerOverlay = document.querySelector("#mobilePlayerOverlay");
-const mobilePlayerFrame = document.querySelector("#mobilePlayerFrame");
-const mobilePlayerCloseButton = document.querySelector("[data-mobile-player-close]");
-const mobileRotateTip = document.querySelector("#mobileRotateTip");
+const mobileToast = document.querySelector("#mobileToast");
 let lastFocusedElement = null;
+let mobileToastTimer = null;
 
 const escapeHtml = (value) =>
   String(value).replace(/[&<>"']/g, (character) => {
@@ -178,17 +176,14 @@ const ratioConfigs = {
   "16:9": {
     cssRatio: "16 / 9",
     dialogClass: "modal-dialog--wide",
-    mobileClass: "mobile-player-frame--wide",
   },
   "9:16": {
     cssRatio: "9 / 16",
     dialogClass: "modal-dialog--portrait",
-    mobileClass: "mobile-player-frame--portrait",
   },
   "4:3": {
     cssRatio: "4 / 3",
     dialogClass: "modal-dialog--classic",
-    mobileClass: "mobile-player-frame--classic",
   },
 };
 
@@ -196,9 +191,8 @@ const getPlatform = (video) => (video.platform === "bilibili" ? "bilibili" : "do
 
 const getRatioConfig = (video) => ratioConfigs[video.ratio] || ratioConfigs["16:9"];
 
-const isMobilePlayer = () =>
-  window.matchMedia("(max-width: 768px), (orientation: landscape) and (max-height: 520px)")
-    .matches;
+const isMobilePlaybackRedirect = () =>
+  window.matchMedia("(max-width: 768px), (pointer: coarse) and (max-height: 520px)").matches;
 
 const getVideoEmbedUrl = (video) => {
   const platform = getPlatform(video);
@@ -223,11 +217,19 @@ const getVideoEmbedUrl = (video) => {
 
 const getStatusLabel = (video) => {
   if (getVideoEmbedUrl(video)) {
-    return `${platformLabels[getPlatform(video)]}播放`;
+    return "播放作品";
   }
 
   if (getPlatform(video) === "douyin" && String(video.douyinShareUrl || "").trim()) {
-    return "需补 VideoID";
+    return "在抖音打开";
+  }
+
+  return "视频即将上线";
+};
+
+const getMobileStatusLabel = (video) => {
+  if (getPlatform(video) === "douyin" && String(video.douyinShareUrl || "").trim()) {
+    return "在抖音观看";
   }
 
   return "视频即将上线";
@@ -252,8 +254,10 @@ const createPlayerIframe = (video, embedUrl) => {
 const getPendingContent = (video) => {
   if (getPlatform(video) === "douyin" && String(video.douyinShareUrl || "").trim()) {
     return {
-      title: "已添加抖音分享链接，请补充 VideoID 后播放。",
-      body: "请从 PC 端打开分享链接，复制最终地址里的 VideoID。",
+      title: "暂未配置站内播放器",
+      body: "可以先在抖音原视频页面观看。",
+      actionLabel: "在抖音打开",
+      actionUrl: String(video.douyinShareUrl || "").trim(),
     };
   }
 
@@ -261,6 +265,32 @@ const getPendingContent = (video) => {
     title: "视频即将上线",
     body: "后续填入抖音 VideoID 后即可在这里播放。",
   };
+};
+
+const buildPendingNotice = (video) => {
+  const pendingContent = getPendingContent(video);
+  const pendingNotice = document.createElement("div");
+  pendingNotice.className = "pending-video";
+
+  const title = document.createElement("strong");
+  title.textContent = pendingContent.title;
+  pendingNotice.append(title);
+
+  const body = document.createElement("span");
+  body.textContent = pendingContent.body;
+  pendingNotice.append(body);
+
+  if (pendingContent.actionUrl) {
+    const action = document.createElement("a");
+    action.className = "pending-video-action";
+    action.href = pendingContent.actionUrl;
+    action.target = "_blank";
+    action.rel = "noreferrer";
+    action.textContent = pendingContent.actionLabel;
+    pendingNotice.append(action);
+  }
+
+  return pendingNotice;
 };
 
 const applyModalRatio = (video) => {
@@ -279,33 +309,19 @@ const resetModalRatio = () => {
   );
 };
 
-const applyMobilePlayerRatio = (video) => {
-  const ratioConfig = getRatioConfig(video);
-
-  mobilePlayerFrame.style.setProperty("--mobile-player-ratio", ratioConfig.cssRatio);
-  mobilePlayerFrame.classList.add(ratioConfig.mobileClass);
-  mobileRotateTip.hidden = ratioConfig.cssRatio !== "16 / 9";
-};
-
-const resetMobilePlayerRatio = () => {
-  mobilePlayerFrame.style.removeProperty("--mobile-player-ratio");
-  mobilePlayerFrame.classList.remove(
-    "mobile-player-frame--wide",
-    "mobile-player-frame--portrait",
-    "mobile-player-frame--classic",
-  );
-  mobileRotateTip.hidden = true;
-};
-
 const renderWorkCard = (work) => {
   const statusLabel = getStatusLabel(work);
+  const mobileStatusLabel = getMobileStatusLabel(work);
 
   return `
     <article class="work-card">
-      <button class="video-frame work-trigger" type="button" data-video-index="${work.index}" aria-label="打开《${escapeHtml(work.title)}》视频弹窗">
+      <button class="video-frame work-trigger" type="button" data-video-index="${work.index}" aria-label="观看《${escapeHtml(work.title)}》">
         <img src="${escapeHtml(work.cover)}" alt="《${escapeHtml(work.title)}》封面" loading="lazy">
         <span class="play-mark" aria-hidden="true"></span>
-        <span class="availability-badge">${statusLabel}</span>
+        <span class="availability-badge">
+          <span class="label-desktop">${escapeHtml(statusLabel)}</span>
+          <span class="label-mobile">${escapeHtml(mobileStatusLabel)}</span>
+        </span>
       </button>
       <div class="work-body">
         <div class="work-meta">
@@ -352,11 +368,7 @@ const openVideoModal = (video, trigger) => {
   if (embedUrl) {
     modalPlayer.append(createPlayerIframe(video, embedUrl));
   } else {
-    const pendingContent = getPendingContent(video);
-    const pendingNotice = document.createElement("div");
-    pendingNotice.className = "pending-video";
-    pendingNotice.innerHTML = `<strong>${escapeHtml(pendingContent.title)}</strong><span>${escapeHtml(pendingContent.body)}</span>`;
-    modalPlayer.append(pendingNotice);
+    modalPlayer.append(buildPendingNotice(video));
   }
 
   videoModal.hidden = false;
@@ -364,27 +376,35 @@ const openVideoModal = (video, trigger) => {
   modalCloseButton.focus();
 };
 
-const openMobilePlayer = (video, trigger) => {
-  const embedUrl = getVideoEmbedUrl(video);
-
-  lastFocusedElement = trigger;
-  mobilePlayerFrame.replaceChildren();
-  mobilePlayerFrame.classList.toggle("mobile-player-frame--pending", !embedUrl);
-  applyMobilePlayerRatio(video);
-
-  if (embedUrl) {
-    mobilePlayerFrame.append(createPlayerIframe(video, embedUrl));
-  } else {
-    const pendingContent = getPendingContent(video);
-    const pendingNotice = document.createElement("div");
-    pendingNotice.className = "pending-video";
-    pendingNotice.innerHTML = `<strong>${escapeHtml(pendingContent.title)}</strong><span>${escapeHtml(pendingContent.body)}</span>`;
-    mobilePlayerFrame.append(pendingNotice);
+const showMobileToast = (message) => {
+  if (!mobileToast) {
+    return;
   }
 
-  mobilePlayerOverlay.hidden = false;
-  document.body.classList.add("modal-open");
-  mobilePlayerCloseButton.focus({ preventScroll: true });
+  window.clearTimeout(mobileToastTimer);
+  mobileToast.textContent = message;
+  mobileToast.hidden = false;
+
+  mobileToastTimer = window.setTimeout(() => {
+    mobileToast.hidden = true;
+  }, 2600);
+};
+
+const openMobileExternalVideo = (video) => {
+  const douyinShareUrl = String(video.douyinShareUrl || "").trim();
+
+  if (!douyinShareUrl) {
+    showMobileToast("视频即将上线");
+    return;
+  }
+
+  const externalWindow = window.open(douyinShareUrl, "_blank");
+
+  if (externalWindow) {
+    externalWindow.opener = null;
+  } else {
+    window.location.href = douyinShareUrl;
+  }
 };
 
 const closeVideoModal = () => {
@@ -393,17 +413,6 @@ const closeVideoModal = () => {
   modalPlayer.classList.remove("modal-player--pending");
   resetModalRatio();
   document.body.classList.remove("modal-open");
-  lastFocusedElement?.focus();
-  lastFocusedElement = null;
-};
-
-const closeMobilePlayer = () => {
-  mobilePlayerOverlay.hidden = true;
-  mobilePlayerFrame.replaceChildren();
-  mobilePlayerFrame.classList.remove("mobile-player-frame--pending");
-  resetMobilePlayerRatio();
-  document.body.classList.remove("modal-open");
-
   lastFocusedElement?.focus();
   lastFocusedElement = null;
 };
@@ -418,8 +427,8 @@ worksGrid.addEventListener("click", (event) => {
   const video = videos[Number(trigger.dataset.videoIndex)];
 
   if (video) {
-    if (isMobilePlayer()) {
-      openMobilePlayer(video, trigger);
+    if (isMobilePlaybackRedirect()) {
+      openMobileExternalVideo(video);
     } else {
       openVideoModal(video, trigger);
     }
@@ -427,7 +436,6 @@ worksGrid.addEventListener("click", (event) => {
 });
 
 modalCloseButton.addEventListener("click", closeVideoModal);
-mobilePlayerCloseButton.addEventListener("click", closeMobilePlayer);
 
 videoModal.addEventListener("click", (event) => {
   if (event.target === videoModal) {
@@ -440,9 +448,7 @@ document.addEventListener("keydown", (event) => {
     return;
   }
 
-  if (!mobilePlayerOverlay.hidden) {
-    closeMobilePlayer();
-  } else if (!videoModal.hidden) {
+  if (!videoModal.hidden) {
     closeVideoModal();
   }
 });
