@@ -582,12 +582,16 @@ h2 {
   position: fixed;
   inset: 0;
   z-index: 30;
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  min-height: 100dvh;
   padding: 24px;
   overflow-y: auto;
   background: rgba(9, 9, 9, 0.72);
   backdrop-filter: blur(12px);
-  place-items: center;
+  overscroll-behavior: contain;
 }
 
 .video-modal[hidden] {
@@ -596,8 +600,11 @@ h2 {
 
 .modal-dialog {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: min(1040px, 100%);
   max-height: calc(100svh - 48px);
+  max-height: calc(100dvh - 48px);
   padding: 24px;
   overflow-y: auto;
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -748,6 +755,66 @@ h2 {
   }
 }
 
+@media (max-width: 768px) {
+  .video-modal {
+    align-items: center;
+    justify-content: center;
+    min-height: 100svh;
+    min-height: 100dvh;
+    padding: 12px;
+  }
+
+  .modal-dialog {
+    width: calc(100vw - 24px);
+    max-height: calc(100svh - 24px);
+    max-height: calc(100dvh - 24px);
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .modal-close {
+    right: 12px;
+    top: 12px;
+    z-index: 2;
+    min-height: 32px;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .modal-copy {
+    display: contents;
+    padding-right: 0;
+  }
+
+  .modal-meta {
+    order: 1;
+    margin: 0 70px 5px 0;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .modal-copy h2 {
+    order: 2;
+    margin: 0 70px 10px 0;
+    font-size: 20px;
+    line-height: 1.24;
+  }
+
+  .modal-player {
+    order: 3;
+    width: 100%;
+  }
+
+  .modal-copy p:last-child {
+    order: 4;
+    max-height: 96px;
+    margin: 12px 0 0;
+    overflow-y: auto;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+}
+
 @media (max-width: 620px) {
   .site-header {
     align-items: center;
@@ -801,29 +868,6 @@ h2 {
 
   .work-body {
     padding: 16px;
-  }
-
-  .video-modal {
-    padding: 14px;
-    place-items: end center;
-  }
-
-  .modal-dialog {
-    max-height: calc(100svh - 28px);
-    padding: 18px;
-  }
-
-  .modal-close {
-    right: 14px;
-    top: 14px;
-  }
-
-  .modal-copy {
-    padding-right: 72px;
-  }
-
-  .modal-copy h2 {
-    font-size: 24px;
   }
 
   .play-mark {
