@@ -174,17 +174,14 @@ const ratioConfigs = {
   "16:9": {
     cssRatio: "16 / 9",
     dialogClass: "modal-dialog--wide",
-    playerMaxWidth: "clamp(280px, calc((100svh - 230px) * 16 / 9), 1040px)",
   },
   "9:16": {
     cssRatio: "9 / 16",
     dialogClass: "modal-dialog--portrait",
-    playerMaxWidth: "clamp(220px, calc((100svh - 230px) * 9 / 16), 460px)",
   },
   "4:3": {
     cssRatio: "4 / 3",
     dialogClass: "modal-dialog--classic",
-    playerMaxWidth: "clamp(260px, calc((100svh - 230px) * 4 / 3), 900px)",
   },
 };
 
@@ -247,13 +244,11 @@ const applyModalRatio = (video) => {
   const ratioConfig = getRatioConfig(video);
 
   modalPlayer.style.setProperty("--player-ratio", ratioConfig.cssRatio);
-  modalPlayer.style.setProperty("--player-max-width", ratioConfig.playerMaxWidth);
   modalDialog.classList.add(ratioConfig.dialogClass);
 };
 
 const resetModalRatio = () => {
   modalPlayer.style.removeProperty("--player-ratio");
-  modalPlayer.style.removeProperty("--player-max-width");
   modalDialog.classList.remove(
     "modal-dialog--wide",
     "modal-dialog--portrait",
