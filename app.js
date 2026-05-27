@@ -151,6 +151,10 @@ const modalMeta = document.querySelector("#modalMeta");
 const modalTitle = document.querySelector("#modalTitle");
 const modalDescription = document.querySelector("#modalDescription");
 const modalPlayer = document.querySelector("#modalPlayer");
+const mobilePlayerOverlay = document.querySelector("#mobilePlayerOverlay");
+const mobilePlayerFrame = document.querySelector("#mobilePlayerFrame");
+const mobilePlayerCloseButton = document.querySelector("[data-mobile-player-close]");
+const mobileRotateTip = document.querySelector("#mobileRotateTip");
 let lastFocusedElement = null;
 
 const escapeHtml = (value) =>
@@ -174,20 +178,27 @@ const ratioConfigs = {
   "16:9": {
     cssRatio: "16 / 9",
     dialogClass: "modal-dialog--wide",
+    mobileClass: "mobile-player-frame--wide",
   },
   "9:16": {
     cssRatio: "9 / 16",
     dialogClass: "modal-dialog--portrait",
+    mobileClass: "mobile-player-frame--portrait",
   },
   "4:3": {
     cssRatio: "4 / 3",
     dialogClass: "modal-dialog--classic",
+    mobileClass: "mobile-player-frame--classic",
   },
 };
 
 const getPlatform = (video) => (video.platform === "bilibili" ? "bilibili" : "douyin");
 
 const getRatioConfig = (video) => ratioConfigs[video.ratio] || ratioConfigs["16:9"];
+
+const isMobilePlayer = () =>
+  window.matchMedia("(max-width: 768px), (orientation: landscape) and (max-height: 520px)")
+    .matches;
 
 const getVideoEmbedUrl = (video) => {
   const platform = getPlatform(video);
@@ -226,6 +237,18 @@ const getIframeTitle = (video) => {
   return `${video.title} - ${platformLabels[getPlatform(video)]}播放器`;
 };
 
+const createPlayerIframe = (video, embedUrl) => {
+  const iframe = document.createElement("iframe");
+  iframe.src = embedUrl;
+  iframe.title = getIframeTitle(video);
+  iframe.loading = "lazy";
+  iframe.allow = "fullscreen; autoplay; clipboard-write; encrypted-media; picture-in-picture";
+  iframe.allowFullscreen = true;
+  iframe.setAttribute("allowfullscreen", "");
+
+  return iframe;
+};
+
 const getPendingContent = (video) => {
   if (getPlatform(video) === "douyin" && String(video.douyinShareUrl || "").trim()) {
     return {
@@ -254,6 +277,24 @@ const resetModalRatio = () => {
     "modal-dialog--portrait",
     "modal-dialog--classic",
   );
+};
+
+const applyMobilePlayerRatio = (video) => {
+  const ratioConfig = getRatioConfig(video);
+
+  mobilePlayerFrame.style.setProperty("--mobile-player-ratio", ratioConfig.cssRatio);
+  mobilePlayerFrame.classList.add(ratioConfig.mobileClass);
+  mobileRotateTip.hidden = ratioConfig.cssRatio !== "16 / 9";
+};
+
+const resetMobilePlayerRatio = () => {
+  mobilePlayerFrame.style.removeProperty("--mobile-player-ratio");
+  mobilePlayerFrame.classList.remove(
+    "mobile-player-frame--wide",
+    "mobile-player-frame--portrait",
+    "mobile-player-frame--classic",
+  );
+  mobileRotateTip.hidden = true;
 };
 
 const renderWorkCard = (work) => {
@@ -309,14 +350,7 @@ const openVideoModal = (video, trigger) => {
   modalPlayer.classList.toggle("modal-player--pending", !embedUrl);
 
   if (embedUrl) {
-    const iframe = document.createElement("iframe");
-    iframe.src = embedUrl;
-    iframe.title = getIframeTitle(video);
-    iframe.loading = "lazy";
-    iframe.allow = "fullscreen; picture-in-picture; autoplay; encrypted-media";
-    iframe.allowFullscreen = true;
-    iframe.setAttribute("allowfullscreen", "");
-    modalPlayer.append(iframe);
+    modalPlayer.append(createPlayerIframe(video, embedUrl));
   } else {
     const pendingContent = getPendingContent(video);
     const pendingNotice = document.createElement("div");
@@ -330,12 +364,46 @@ const openVideoModal = (video, trigger) => {
   modalCloseButton.focus();
 };
 
+const openMobilePlayer = (video, trigger) => {
+  const embedUrl = getVideoEmbedUrl(video);
+
+  lastFocusedElement = trigger;
+  mobilePlayerFrame.replaceChildren();
+  mobilePlayerFrame.classList.toggle("mobile-player-frame--pending", !embedUrl);
+  applyMobilePlayerRatio(video);
+
+  if (embedUrl) {
+    mobilePlayerFrame.append(createPlayerIframe(video, embedUrl));
+  } else {
+    const pendingContent = getPendingContent(video);
+    const pendingNotice = document.createElement("div");
+    pendingNotice.className = "pending-video";
+    pendingNotice.innerHTML = `<strong>${escapeHtml(pendingContent.title)}</strong><span>${escapeHtml(pendingContent.body)}</span>`;
+    mobilePlayerFrame.append(pendingNotice);
+  }
+
+  mobilePlayerOverlay.hidden = false;
+  document.body.classList.add("modal-open");
+  mobilePlayerCloseButton.focus({ preventScroll: true });
+};
+
 const closeVideoModal = () => {
   videoModal.hidden = true;
   modalPlayer.replaceChildren();
   modalPlayer.classList.remove("modal-player--pending");
   resetModalRatio();
   document.body.classList.remove("modal-open");
+  lastFocusedElement?.focus();
+  lastFocusedElement = null;
+};
+
+const closeMobilePlayer = () => {
+  mobilePlayerOverlay.hidden = true;
+  mobilePlayerFrame.replaceChildren();
+  mobilePlayerFrame.classList.remove("mobile-player-frame--pending");
+  resetMobilePlayerRatio();
+  document.body.classList.remove("modal-open");
+
   lastFocusedElement?.focus();
   lastFocusedElement = null;
 };
@@ -350,11 +418,16 @@ worksGrid.addEventListener("click", (event) => {
   const video = videos[Number(trigger.dataset.videoIndex)];
 
   if (video) {
-    openVideoModal(video, trigger);
+    if (isMobilePlayer()) {
+      openMobilePlayer(video, trigger);
+    } else {
+      openVideoModal(video, trigger);
+    }
   }
 });
 
 modalCloseButton.addEventListener("click", closeVideoModal);
+mobilePlayerCloseButton.addEventListener("click", closeMobilePlayer);
 
 videoModal.addEventListener("click", (event) => {
   if (event.target === videoModal) {
@@ -363,7 +436,13 @@ videoModal.addEventListener("click", (event) => {
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !videoModal.hidden) {
+  if (event.key !== "Escape") {
+    return;
+  }
+
+  if (!mobilePlayerOverlay.hidden) {
+    closeMobilePlayer();
+  } else if (!videoModal.hidden) {
     closeVideoModal();
   }
 });
