@@ -128,6 +128,12 @@
       </div>
     </div>
 
+    <div class="mobile-player-overlay" id="mobilePlayerOverlay" role="dialog" aria-modal="true" aria-label="视频播放层" hidden>
+      <button class="mobile-close-button" type="button" data-mobile-player-close aria-label="关闭视频播放层">关闭</button>
+      <div class="mobile-player-frame" id="mobilePlayerFrame" aria-live="polite"></div>
+      <p class="mobile-rotate-tip" id="mobileRotateTip" hidden>建议横屏观看</p>
+    </div>
+
     <script src="./app.js" type="module"></script>
   </body>
 </html>
