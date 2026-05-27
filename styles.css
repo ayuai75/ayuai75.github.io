@@ -618,8 +618,19 @@ h2 {
   width: min(900px, 100%);
 }
 
+.modal-dialog--classic .modal-player {
+  width: min(100%, 900px);
+}
+
 .modal-dialog--portrait {
   width: min(560px, 100%);
+}
+
+.modal-dialog--portrait .modal-player {
+  width: min(100%, calc(72svh * 9 / 16), 460px);
+  width: min(100%, calc(72dvh * 9 / 16), 460px);
+  max-height: 72svh;
+  max-height: 72dvh;
 }
 
 .modal-close {
@@ -666,7 +677,7 @@ h2 {
 
 .modal-player {
   display: block;
-  width: min(100%, var(--player-max-width, 100%));
+  width: 100%;
   margin: 0 auto;
   overflow: hidden;
   aspect-ratio: var(--player-ratio, 16 / 9);
@@ -787,31 +798,39 @@ h2 {
   }
 
   .modal-meta {
-    order: 1;
-    margin: 0 70px 5px 0;
+    order: 2;
+    margin: 14px 70px 5px 0;
     font-size: 11px;
     line-height: 1.35;
   }
 
   .modal-copy h2 {
-    order: 2;
+    order: 3;
     margin: 0 70px 10px 0;
     font-size: 20px;
     line-height: 1.24;
   }
 
   .modal-player {
-    order: 3;
+    order: 1;
     width: 100%;
+    max-height: none;
   }
 
   .modal-copy p:last-child {
     order: 4;
-    max-height: 96px;
-    margin: 12px 0 0;
+    max-height: 120px;
+    margin: 0;
     overflow-y: auto;
     font-size: 13px;
     line-height: 1.55;
+  }
+
+  .modal-dialog--portrait .modal-player {
+    width: min(100%, calc(72svh * 9 / 16));
+    width: min(100%, calc(72dvh * 9 / 16));
+    max-height: 72svh;
+    max-height: 72dvh;
   }
 }
 
