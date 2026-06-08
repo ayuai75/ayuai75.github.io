@@ -43,8 +43,8 @@ const videos = [
   },
   {
     title: "比亚迪腾势",
-    category: "汽车广告",
-    tag: "汽车广告",
+    category: "商业广告",
+    tag: "商业广告",
     duration: "01:55",
     description:
       "一台能陪孩子一起长大的车，藏在日常里的温柔陪伴，也承载阖家出行时的安心与欢喜。",
@@ -57,8 +57,8 @@ const videos = [
   },
   {
     title: "方程豹",
-    category: "汽车广告",
-    tag: "汽车广告",
+    category: "商业广告",
+    tag: "商业广告",
     duration: "02:30",
     description:
       "方程豹钛 3 以技术谱写向往，用全新的 AI 影像方式记录出行、探索与生活可能性。",
@@ -71,7 +71,7 @@ const videos = [
   },
   {
     title: "给自己的一封信【联想】",
-    category: "汽车广告",
+    category: "商业广告",
     tag: "品牌叙事",
     duration: "02:28",
     description:
@@ -157,11 +157,11 @@ const videos = [
 
 const categoryNotes = {
   创意短片: "以 AI 影像承载寓言、现实议题与东方志怪情绪。",
-  汽车广告: "用 AIGC 建立品牌叙事、产品想象与情绪记忆。",
+  商业广告: "用 AIGC 建立品牌叙事、产品想象与情绪记忆。",
   "AI 漫剧": "围绕末日、IP、怪谈与类型叙事，探索 AI 影像的连续剧感。",
 };
 
-const categories = ["创意短片", "汽车广告", "AI 漫剧"];
+const categories = ["创意短片", "商业广告", "AI 漫剧"];
 
 const workGroups = categories.map((category) => ({
   category,
