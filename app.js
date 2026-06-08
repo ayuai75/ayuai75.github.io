@@ -84,8 +84,36 @@ const videos = [
     status: "ready",
   },
   {
+    title: "末日乐园预告",
+    category: "AI 漫剧",
+    tag: "末日漫剧",
+    duration: "预告",
+    description:
+      "“规则很简单，活到第一局结束，就算赢。”以末日生存游戏为入口，展开规则、危机与命运交错的 AI 漫剧预告。",
+    cover: "./assets/covers/apocalypse-paradise-trailer.png",
+    platform: "douyin",
+    douyinShareUrl: "https://v.douyin.com/nPgIB3atdl0/",
+    douyinVideoId: "7648726904337452326",
+    ratio: "16:9",
+    status: "ready",
+  },
+  {
+    title: "末日乐园 第一集",
+    category: "AI 漫剧",
+    tag: "连续漫剧",
+    duration: "第一集",
+    description:
+      "她在末日里醒来，必须在陌生规则与生存压迫中找到第一局的出口。AI 影像搭建末世类型叙事的连续剧场。",
+    cover: "./assets/covers/apocalypse-paradise-episode-1.png",
+    platform: "douyin",
+    douyinShareUrl: "https://v.douyin.com/IR-sFK9K8hI/",
+    douyinVideoId: "7648639273222130987",
+    ratio: "16:9",
+    status: "ready",
+  },
+  {
     title: "诡秘之主：我们拯救了廷根",
-    category: "漫剧",
+    category: "AI 漫剧",
     tag: "IP 漫剧",
     duration: "01:23",
     description:
@@ -99,7 +127,7 @@ const videos = [
   },
   {
     title: "我在怪谈论坛学斩鬼",
-    category: "漫剧",
+    category: "AI 漫剧",
     tag: "怪谈漫剧",
     duration: "03:13",
     description:
@@ -113,7 +141,7 @@ const videos = [
   },
   {
     title: "诸神愚戏",
-    category: "漫剧",
+    category: "AI 漫剧",
     tag: "真人漫剧",
     duration: "02:05",
     description:
@@ -130,10 +158,10 @@ const videos = [
 const categoryNotes = {
   创意短片: "以 AI 影像承载寓言、现实议题与东方志怪情绪。",
   汽车广告: "用 AIGC 建立品牌叙事、产品想象与情绪记忆。",
-  漫剧: "围绕 IP、怪谈与类型叙事，探索 AI 影像的连续剧感。",
+  "AI 漫剧": "围绕末日、IP、怪谈与类型叙事，探索 AI 影像的连续剧感。",
 };
 
-const categories = ["创意短片", "汽车广告", "漫剧"];
+const categories = ["创意短片", "汽车广告", "AI 漫剧"];
 
 const workGroups = categories.map((category) => ({
   category,
@@ -337,12 +365,16 @@ const renderWorkCard = (work) => {
 
 worksGrid.innerHTML = workGroups
   .map(
-    (group) => `
-      <section class="work-group" aria-labelledby="${group.category}">
+    (group, groupIndex) => {
+      const groupId = `work-category-${groupIndex}`;
+      const groupClass = group.works.length > 3 ? "work-group work-group--extended" : "work-group";
+
+      return `
+      <section class="${groupClass}" aria-labelledby="${groupId}">
         <div class="group-heading">
           <div>
             <p class="group-kicker">Category / ${group.works.length} Works</p>
-            <h3 id="${group.category}">${group.category}</h3>
+            <h3 id="${groupId}">${group.category}</h3>
           </div>
           <p>${group.note}</p>
         </div>
@@ -350,7 +382,8 @@ worksGrid.innerHTML = workGroups
           ${group.works.map(renderWorkCard).join("")}
         </div>
       </section>
-    `,
+    `;
+    },
   )
   .join("");
 
