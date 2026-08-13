@@ -1,24 +1,51 @@
-# 向AI进击的阿鱼 · Director Portfolio
+# 向AI进击的阿鱼个人主页
 
-个人导演作品档案，发布于 `https://ayuai75.github.io/`。
+发布地址：`https://ayuai75.github.io/`
 
 ## 页面结构
 
-- Selected Works：首页精选 8 个项目
-- Live Action × AI：实拍与 AI 制作能力专题
-- Work Index：完整作品档案及五类筛选
-- Awards & Festivals：获奖与入围经历
-- About / Contact：创作者介绍与合作入口
+页面保留原作品集的视觉与交互方式，作品分为：
 
-作品一级分类：
+- 原创影像
+- IP 改编
+- 实拍 × AI
+- 商业影像
+- 创作实验
 
-- `original`：原创影像
-- `adaptation`：IP 改编
-- `live-action`：实拍 × AI
-- `commercial`：商业影像
-- `lab`：创作实验
+每支视频都是独立作品卡片，封面来自 `assets/covers/portfolio/`。
 
-获奖、高播放、真人、动画等信息统一放在项目 `tags` 中，不作为一级分类。
+## 播放方式
+
+- 电脑端抖音作品：点击封面后，在当前页面弹窗内动态创建抖音 iframe。
+- 手机端抖音作品：点击封面后打开抖音原视频页面。
+- 小红书与快手作品：点击封面后打开对应原平台页面。
+- 关闭电脑端弹窗时销毁 iframe，页面初始不加载视频播放器。
+
+抖音播放器地址由 `douyinVideoId` 生成：
+
+```text
+https://open.douyin.com/player/video?vid=抖音VideoID&autoplay=0
+```
+
+## 修改作品
+
+所有作品集中在 `app.js` 顶部的 `videos` 数组中：
+
+```js
+{
+  title: "作品标题",
+  category: "原创影像",
+  tag: "真人 · 科幻",
+  duration: "2026.08",
+  description: "作品简介",
+  cover: coverPath("cover-file"),
+  platform: "douyin",
+  shareUrl: douyinUrl("抖音作品ID"),
+  douyinVideoId: "抖音作品ID",
+  ratio: "16:9",
+  status: "ready",
+}
+```
 
 ## 本地预览
 
@@ -29,44 +56,7 @@ python3 -m http.server 4173 --bind 127.0.0.1
 
 打开 `http://127.0.0.1:4173/`。
 
-## 作品配置
-
-所有项目集中在 `app.js` 的 `projects` 数组中。单个项目可以包含一支或多支影像：
-
-```js
-{
-  id: "project-id",
-  title: "中文片名",
-  titleEn: "ENGLISH TITLE",
-  category: "original",
-  year: "2026.08",
-  meta: "SCI-FI · 18 MIN",
-  cover: coverPath("cover-file"),
-  tags: ["FLAGSHIP", "SCI-FI", "AI FILM"],
-  description: "项目简介",
-  films: [
-    {
-      label: "观看完整作品",
-      platform: "douyin",
-      videoId: "抖音作品 ID",
-      shareUrl: "https://www.douyin.com/video/抖音作品ID",
-    },
-  ],
-}
-```
-
-`featured: 1` 到 `featured: 8` 控制首页精选作品和顺序。`badge: "3 FILMS"` 用于系列项目角标。
-
-## 播放策略
-
-- 电脑端：打开项目详情，点击具体影片后才创建抖音 iframe。
-- 手机端：单片项目直接打开公开原视频地址；多片系列先打开站内项目详情供选择。
-- 关闭详情时销毁 iframe，避免后台继续播放。
-- 页面初始不加载任何视频 iframe。
-
-## 资源约定
-
-封面统一放在 `assets/covers/portfolio/`，优先使用轻量 WebP。仓库不提交本地视频文件：
+仓库不提交本地视频文件：
 
 ```gitignore
 *.mp4

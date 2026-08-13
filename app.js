@@ -1,596 +1,721 @@
-const coverPath = (slug) => `./assets/covers/portfolio/${slug}.webp`;
-const douyinUrl = (id) => `https://www.douyin.com/video/${id}`;
+const coverPath = (name) => `./assets/covers/portfolio/${name}.webp`;
+const douyinUrl = (videoId) => `https://www.douyin.com/video/${videoId}`;
 
-const projects = [
+const videos = [
   {
-    id: "last-poet",
     title: "地球上最后一个诗人",
-    titleEn: "THE LAST POET ON EARTH",
-    category: "original",
-    year: "2025 — 2026",
-    meta: "SCI-FI · 18 MIN",
+    category: "原创影像",
+    tag: "代表作 · 科幻",
+    duration: "2026.08 · 18 MIN",
+    description: "关于记忆、痛苦、存在与救赎的后人类寓言。数字永生成为普遍选择后，一个仍保留感官的人必须决定什么才是人类最后不可删除的部分。",
     cover: coverPath("last-poet-2026"),
-    tags: ["FLAGSHIP", "SCI-FI", "AI FILM", "LIVE ACTION"],
-    description: "在数字永生成为普遍选择后，一个仍然保留痛苦、记忆与感官的人，必须决定什么才是人类最后不可被删除的部分。",
-    featured: 1,
-    films: [
-      {
-        label: "2026 Final Version",
-        detail: "18 min · Director's Cut",
-        platform: "douyin",
-        videoId: "7672377395738955017",
-        shareUrl: douyinUrl("7672377395738955017"),
-      },
-      {
-        label: "2025 Original Version",
-        detail: "Award-winning Short Film",
-        platform: "douyin",
-        videoId: "7561347762295786802",
-        shareUrl: douyinUrl("7561347762295786802"),
-      },
-    ],
+    platform: "douyin",
+    shareUrl: douyinUrl("7672377395738955017"),
+    douyinVideoId: "7672377395738955017",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "xi",
     title: "喜",
-    titleEn: "DOUBLE HAPPINESS",
-    category: "original",
-    year: "2026.02",
-    meta: "HORROR · SHORT FILM",
-    cover: coverPath("xi"),
-    tags: ["VIRAL", "HORROR", "LIVE ACTION"],
+    category: "原创影像",
+    tag: "中式恐怖 · 高播放",
+    duration: "2026.02",
     description: "婚嫁的喜色与民俗阴影彼此吞噬，一则以东方仪式和女性视角展开的中式恐怖短片。",
-    featured: 2,
-    films: [{ label: "观看完整作品", platform: "douyin", videoId: "7605074719074831635", shareUrl: douyinUrl("7605074719074831635") }],
+    cover: coverPath("xi"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7605074719074831635"),
+    douyinVideoId: "7605074719074831635",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "returned-next-time",
     title: "下次已退回",
-    titleEn: "RETURNED: NEXT TIME",
-    category: "original",
-    year: "2026.08",
-    meta: "DRAMA · FAMILY",
-    cover: coverPath("returned-next-time"),
-    tags: ["DRAMA", "FAMILY", "LIVE ACTION"],
+    category: "原创影像",
+    tag: "真人 · 亲情",
+    duration: "2026.08",
     description: "一段被反复退回的现实，牵出亲情、错过与重新面对彼此的可能。",
-    featured: 3,
-    films: [{ label: "观看完整作品", platform: "douyin", videoId: "7673084869026663689", shareUrl: douyinUrl("7673084869026663689") }],
+    cover: coverPath("returned-next-time"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7673084869026663689"),
+    douyinVideoId: "7673084869026663689",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "healing-fairy-tale",
     title: "治愈童话",
-    titleEn: "A HEALING FAIRY TALE",
-    category: "original",
-    year: "2026.07",
-    meta: "ANIMATION · HEALING",
-    cover: coverPath("healing-fairy-tale"),
-    tags: ["ANIMATION", "HEALING"],
+    category: "原创影像",
+    tag: "动画 · 治愈",
+    duration: "2026.07",
     description: "用明亮而柔软的动画世界，讲述相遇、理解与被温柔接住的瞬间。",
-    featured: 8,
-    films: [{ label: "观看完整作品", platform: "douyin", videoId: "7660458393290722575", shareUrl: douyinUrl("7660458393290722575") }],
+    cover: coverPath("healing-fairy-tale"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7660458393290722575"),
+    douyinVideoId: "7660458393290722575",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "beyond-the-mountain",
-    title: "山的后面",
-    titleEn: "BEYOND THE MOUNTAIN",
-    category: "original",
-    year: "2025.10",
-    meta: "DRAMA · SHORT FILM",
-    cover: coverPath("beyond-the-mountain"),
-    tags: ["AWARD WINNER", "LIVE ACTION", "DRAMA"],
-    description: "一只流浪猫的独白，用爪尖的自由哲学反衬人类世界的爱与囚笼。",
-    featured: 7,
-    films: [{ label: "观看完整作品", platform: "douyin", videoId: "7565731356559887625", shareUrl: douyinUrl("7565731356559887625") }],
-  },
-  {
-    id: "wandering-monk",
     title: "长徙僧",
-    titleEn: "THE WANDERING MONK",
-    category: "original",
-    year: "2026.04",
-    meta: "ANCIENT CHINA · DRAMA",
-    cover: coverPath("wandering-monk"),
-    tags: ["ANCIENT CHINA", "LIVE ACTION"],
+    category: "原创影像",
+    tag: "真人 · 古风",
+    duration: "2026.04",
     description: "一个漫长行旅中的古风故事，以克制的人物表演和命运感勾勒精神归途。",
-    films: [{ label: "观看完整作品", platform: "douyin", videoId: "7623650876346977590", shareUrl: douyinUrl("7623650876346977590") }],
+    cover: coverPath("wandering-monk"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7623650876346977590"),
+    douyinVideoId: "7623650876346977590",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "healing-banana-cat",
     title: "治愈香蕉猫",
-    titleEn: "BANANA CAT",
-    category: "original",
-    year: "2026.03",
-    meta: "ANIMATION · HEALING",
-    cover: coverPath("healing-banana-cat"),
-    tags: ["ANIMATION", "HEALING"],
+    category: "原创影像",
+    tag: "动画 · 治愈",
+    duration: "2026.03",
     description: "在梦境般的糖果森林中，用轻盈动画回应孤独与陪伴。",
-    films: [{ label: "观看完整作品", platform: "douyin", videoId: "7620099377079651635", shareUrl: douyinUrl("7620099377079651635") }],
+    cover: coverPath("healing-banana-cat"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7620099377079651635"),
+    douyinVideoId: "7620099377079651635",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "return-to-lingxiao",
+    title: "山的后面",
+    category: "原创影像",
+    tag: "获奖 · 真人",
+    duration: "2025.10",
+    description: "一只流浪猫的独白，用爪尖的自由哲学反衬人类世界的爱与囚笼。",
+    cover: coverPath("beyond-the-mountain"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7565731356559887625"),
+    douyinVideoId: "7565731356559887625",
+    ratio: "16:9",
+    status: "ready",
+  },
+  {
+    title: "地球上最后一个诗人（2025版）",
+    category: "原创影像",
+    tag: "获奖 · 长片",
+    duration: "2025.10",
+    description: "代表作的最初版本，记录《地球上最后一个诗人》从获奖短片走向新版长片的创作起点。",
+    cover: coverPath("last-poet-2025"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7561347762295786802"),
+    douyinVideoId: "7561347762295786802",
+    ratio: "16:9",
+    status: "ready",
+  },
+  {
     title: "再踏凌霄",
-    titleEn: "RETURN TO LINGXIAO",
-    category: "original",
-    year: "2025",
-    meta: "ANIMATION · SHORT FILM",
-    cover: coverPath("return-to-lingxiao"),
-    tags: ["AWARD WINNER", "ANIMATION"],
+    category: "原创影像",
+    tag: "获奖 · 动画",
+    duration: "2025",
     description: "以动画重访东方神话中的反抗、选择与再次出发。",
-    films: [{ label: "在快手观看", platform: "kuaishou", shareUrl: "https://www.kuaishou.com/f/X-6XfFfUAAws7t6Q" }],
+    cover: coverPath("return-to-lingxiao"),
+    platform: "kuaishou",
+    shareUrl: "https://www.kuaishou.com/f/X-6XfFfUAAws7t6Q",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "six-flavors-of-life",
     title: "浮生六味",
-    titleEn: "SIX FLAVORS OF LIFE",
-    category: "original",
-    year: "2025",
-    meta: "POETIC FILM",
-    cover: coverPath("six-flavors-of-life"),
-    tags: ["POETIC", "ANCIENT CHINA"],
+    category: "原创影像",
+    tag: "东方 · 诗意",
+    duration: "2025",
     description: "以六味观浮生，在东方意象和日常感受之间寻找人生的余韵。",
-    films: [{ label: "在小红书观看", platform: "xiaohongshu", shareUrl: "https://www.xiaohongshu.com/discovery/item/691fe6e8000000001e00848e" }],
+    cover: coverPath("six-flavors-of-life"),
+    platform: "xiaohongshu",
+    shareUrl: "https://www.xiaohongshu.com/discovery/item/691fe6e8000000001e00848e?source=webshare&xhsshare=pc_web&xsec_token=ABJ_CZ9MVU6ahkiFp8FKfaa5iqnSM1MpWJsWh4ym32y-A=&xsec_source=pc_share",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "lord-of-mysteries",
-    title: "诡秘之主",
-    titleEn: "LORD OF MYSTERIES",
-    category: "adaptation",
-    year: "2026.05",
-    meta: "IP ADAPTATION SERIES · 3 FILMS",
-    cover: coverPath("lord-of-mysteries-2"),
-    tags: ["VIRAL", "IP ADAPTATION", "ANIMATION"],
-    badge: "3 FILMS",
-    description: "以三支独立短片进入诡秘世界，在维多利亚式阴影、疯狂与守护者命运之间完成系列化改编。",
-    featured: 5,
-    films: [
-      { label: "Film 01", detail: "系列短片", platform: "douyin", videoId: "7642667180676369699", shareUrl: douyinUrl("7642667180676369699") },
-      { label: "Film 02", detail: "系列短片", platform: "douyin", videoId: "7629744274724130067", shareUrl: douyinUrl("7629744274724130067") },
-      { label: "我们拯救了廷根", detail: "系列短片", platform: "douyin", videoId: "7625852519557713215", shareUrl: douyinUrl("7625852519557713215") },
-    ],
-  },
-  {
-    id: "apocalypse-paradise",
-    title: "末日乐园",
-    titleEn: "WORLD'S END PARADISE",
-    category: "adaptation",
-    year: "2026.06",
-    meta: "NOVEL ADAPTATION · TRAILER",
+    title: "末日乐园预告",
+    category: "IP 改编",
+    tag: "小说改编 · 真人",
+    duration: "2026.06",
+    description: "“规则很简单，活到第一局结束，就算赢。”以真人表演和 AI 世界构建进入末日生存游戏。",
     cover: coverPath("apocalypse-paradise"),
-    tags: ["IP ADAPTATION", "LIVE ACTION", "TRAILER"],
-    description: "规则很简单，活到第一局结束，就算赢。以真人表演和 AI 世界构建进入末日生存游戏。",
-    films: [{ label: "观看预告片", platform: "douyin", videoId: "7648726904337452326", shareUrl: douyinUrl("7648726904337452326") }],
+    platform: "douyin",
+    shareUrl: douyinUrl("7648726904337452326"),
+    douyinVideoId: "7648726904337452326",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "jianlai",
-    title: "剑来",
-    titleEn: "SWORD OF COMING",
-    category: "adaptation",
-    year: "2026.07",
-    meta: "IP ADAPTATION · LIVE ACTION",
-    cover: coverPath("jianlai"),
-    tags: ["LIVE ACTION × AI", "IP ADAPTATION"],
-    description: "以实拍人物、现场摄影和 AI 场景延展，重构东方玄幻世界的视觉气韵。",
-    films: [{ label: "观看完整作品", platform: "douyin", videoId: "7664548617386705649", shareUrl: douyinUrl("7664548617386705649") }],
+    title: "诡秘之主 · Film 01",
+    category: "IP 改编",
+    tag: "漫改 · 动画",
+    duration: "2026.05",
+    description: "以系列短片进入诡秘世界，在维多利亚式阴影、疯狂与守护者命运之间完成视觉改编。",
+    cover: coverPath("lord-of-mysteries-1"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7642667180676369699"),
+    douyinVideoId: "7642667180676369699",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "foolish-play-of-gods",
-    title: "诸神愚戏",
-    titleEn: "FOOLISH PLAY OF GODS",
-    category: "adaptation",
-    year: "2025.12",
-    meta: "COMIC ADAPTATION · LIVE ACTION",
-    cover: coverPath("foolish-play-of-gods"),
-    tags: ["IP ADAPTATION", "LIVE ACTION"],
-    description: "真人版试炼开启，以强风格视觉进入规则、谎言与命运互相纠缠的叙事场。",
-    films: [{ label: "观看完整作品", platform: "douyin", videoId: "7585570996866829618", shareUrl: douyinUrl("7585570996866829618") }],
+    title: "诡秘之主 · Film 02",
+    category: "IP 改编",
+    tag: "漫改 · 动画",
+    duration: "2026.05",
+    description: "延续诡秘世界的阴郁质感，以独立人物切面展开系列化 AI 改编。",
+    cover: coverPath("lord-of-mysteries-2"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7629744274724130067"),
+    douyinVideoId: "7629744274724130067",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "ghost-forum-slayer",
-    title: "我在怪谈论坛学斩鬼",
-    titleEn: "GHOST FORUM SLAYER",
-    category: "adaptation",
-    year: "2025.12",
-    meta: "COMIC ADAPTATION · ANIMATION",
-    cover: coverPath("ghost-forum-slayer"),
-    tags: ["IP ADAPTATION", "ANIMATION", "HORROR"],
-    description: "怪谈论坛中的诡事逐渐照进现实，一个普通学生在规则阴影中升级求生。",
-    films: [{ label: "观看完整作品", platform: "douyin", videoId: "7585179005993766171", shareUrl: douyinUrl("7585179005993766171") }],
+    title: "诡秘之主：我们拯救了廷根",
+    category: "IP 改编",
+    tag: "漫改 · 动画",
+    duration: "2026.05",
+    description: "“我们是守护者，也是一群时刻对抗危险和疯狂的可怜虫。”进入廷根守护者的命运切面。",
+    cover: coverPath("lord-of-mysteries-3"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7625852519557713215"),
+    douyinVideoId: "7625852519557713215",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "slay-the-dragon",
-    title: "杀了那条龙",
-    titleEn: "SLAY THAT DRAGON",
-    category: "adaptation",
-    year: "2025",
-    meta: "GAME REIMAGINED · FEMALE STORY",
-    cover: coverPath("slay-the-dragon"),
-    tags: ["AWARD WINNER", "GAME", "FEMALE STORY"],
-    description: "从游戏世界出发，以女性视角重新书写屠龙、命运和自我选择。",
-    films: [{ label: "在小红书观看", platform: "xiaohongshu", shareUrl: "https://www.xiaohongshu.com/discovery/item/688c45a8000000000500a1ad" }],
-  },
-  {
-    id: "scums-wish",
     title: "人渣的本愿",
-    titleEn: "SCUM'S WISH",
-    category: "adaptation",
-    year: "2026.03",
-    meta: "NARRATIVE EDIT · LIVE ACTION",
-    cover: coverPath("scums-wish"),
-    tags: ["LIVE ACTION", "NARRATIVE EDIT"],
+    category: "IP 改编",
+    tag: "真人化 · 剧情",
+    duration: "2026.03",
     description: "将剧情混剪、真人化与解说叙事结合，重组人物欲望与关系中的隐秘张力。",
-    films: [{ label: "观看完整作品", platform: "douyin", videoId: "7617555846339267875", shareUrl: douyinUrl("7617555846339267875") }],
+    cover: coverPath("scums-wish"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7617555846339267875"),
+    douyinVideoId: "7617555846339267875",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "mulan",
+    title: "诸神愚戏",
+    category: "IP 改编",
+    tag: "漫改 · 真人",
+    duration: "2025.12",
+    description: "真人版试炼开启，以强风格视觉进入规则、谎言与命运互相纠缠的叙事场。",
+    cover: coverPath("foolish-play-of-gods"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7585570996866829618"),
+    douyinVideoId: "7585570996866829618",
+    ratio: "16:9",
+    status: "ready",
+  },
+  {
+    title: "我在怪谈论坛学斩鬼",
+    category: "IP 改编",
+    tag: "漫改 · 动画",
+    duration: "2025.12",
+    description: "怪谈论坛中的诡事逐渐照进现实，一个普通学生在规则阴影中升级求生。",
+    cover: coverPath("ghost-forum-slayer"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7585179005993766171"),
+    douyinVideoId: "7585179005993766171",
+    ratio: "16:9",
+    status: "ready",
+  },
+  {
+    title: "杀了那条龙",
+    category: "IP 改编",
+    tag: "游戏二创 · 获奖",
+    duration: "2025",
+    description: "从游戏世界出发，以女性视角重新书写屠龙、命运和自我选择。",
+    cover: coverPath("slay-the-dragon"),
+    platform: "xiaohongshu",
+    shareUrl: "https://www.xiaohongshu.com/discovery/item/688c45a8000000000500a1ad?source=webshare&xhsshare=pc_web&xsec_token=ABBlpx4HKSZIYteLRA_oKJDjJIVGfmzt6yPGFUcD82u2w=&xsec_source=pc_share",
+    ratio: "16:9",
+    status: "ready",
+  },
+  {
     title: "花木兰",
-    titleEn: "MULAN",
-    category: "live-action",
-    year: "2026.06",
-    meta: "LIVE ACTION × AI",
-    cover: coverPath("mulan"),
-    tags: ["LIVE ACTION × AI", "PERFORMANCE", "COMPOSITING"],
+    category: "实拍 × AI",
+    tag: "实拍为主 · AI 为辅",
+    duration: "2026.06",
     description: "以现场表演和摄影为基底，让 AI 延展战场、时空与人物内心的视觉规模。",
-    featured: 6,
-    films: [{ label: "观看完整作品", platform: "douyin", videoId: "7647392584839759589", shareUrl: douyinUrl("7647392584839759589") }],
+    cover: coverPath("mulan"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7647392584839759589"),
+    douyinVideoId: "7647392584839759589",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "kundao",
     title: "坤道",
-    titleEn: "KUNDAO",
-    category: "live-action",
-    year: "2026.05",
-    meta: "LIVE ACTION × AI",
-    cover: coverPath("kundao"),
-    tags: ["LIVE ACTION × AI", "PERFORMANCE"],
+    category: "实拍 × AI",
+    tag: "实拍为主 · AI 为辅",
+    duration: "2026.05",
     description: "真人表演和现场质感构成叙事骨架，AI 负责扩展人物所处的精神空间。",
-    films: [{ label: "观看完整作品", platform: "douyin", videoId: "7634830644921404645", shareUrl: douyinUrl("7634830644921404645") }],
+    cover: coverPath("kundao"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7634830644921404645"),
+    douyinVideoId: "7634830644921404645",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "byd",
-    title: "BYD",
-    titleEn: "BYD · BRANDED FILMS",
-    category: "commercial",
-    year: "2026.05",
-    meta: "AI COMMERCIAL · 2 FILMS",
+    title: "剑来",
+    category: "实拍 × AI",
+    tag: "IP · 实拍 × AI",
+    duration: "2026.07",
+    description: "以实拍人物、现场摄影和 AI 场景延展，重构东方玄幻世界的视觉气韵。",
+    cover: coverPath("jianlai"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7664548617386705649"),
+    douyinVideoId: "7664548617386705649",
+    ratio: "16:9",
+    status: "ready",
+  },
+  {
+    title: "BYD · 美好出行家",
+    category: "商业影像",
+    tag: "汽车 · 品牌影像",
+    duration: "2026.05",
+    description: "以家庭陪伴为情绪入口，在生活细节中建立产品与用户之间的温暖连接。",
     cover: coverPath("byd-film-1"),
-    tags: ["BRANDED", "AUTOMOTIVE", "LIVE ACTION"],
-    badge: "2 FILMS",
-    description: "两支汽车品牌影像，以家庭陪伴和户外探索为不同情绪入口，完成从产品特性到生活方式的叙事转换。",
-    featured: 4,
-    films: [
-      { label: "DENZA · 美好出行家", detail: "Branded Film", platform: "douyin", videoId: "7644566606844038463", shareUrl: douyinUrl("7644566606844038463") },
-      { label: "方程豹 · 钛 3", detail: "AI Commercial", platform: "douyin", videoId: "7621094404614393097", shareUrl: douyinUrl("7621094404614393097") },
-    ],
+    platform: "douyin",
+    shareUrl: douyinUrl("7644566606844038463"),
+    douyinVideoId: "7644566606844038463",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "letter-to-myself",
+    title: "BYD · 方程豹钛 3",
+    category: "商业影像",
+    tag: "汽车 · AI 广告",
+    duration: "2026.05",
+    description: "以户外探索和科技想象展开汽车产品叙事，连接性能表达与生活方式。",
+    cover: coverPath("byd-film-2"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7621094404614393097"),
+    douyinVideoId: "7621094404614393097",
+    ratio: "16:9",
+    status: "ready",
+  },
+  {
     title: "给自己的一封信",
-    titleEn: "A LETTER TO MYSELF",
-    category: "commercial",
-    year: "2025",
-    meta: "BRANDED FILM · ANIMATION",
-    cover: coverPath("letter-to-myself"),
-    tags: ["AWARD WINNER", "BRANDED", "ANIMATION"],
+    category: "商业影像",
+    tag: "获奖 · 品牌叙事",
+    duration: "动画短片",
     description: "从旧电脑到未来数据海洋，两个时代的自己隔空相望，完成一封关于选择与成长的时光回信。",
-    films: [{ label: "观看完整作品", platform: "douyin", videoId: "7519441971397889331", shareUrl: douyinUrl("7519441971397889331") }],
+    cover: coverPath("letter-to-myself"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7519441971397889331"),
+    douyinVideoId: "7519441971397889331",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "mechanical-eye",
     title: "机械眼教程",
-    titleEn: "MECHANICAL EYE WORKFLOW",
-    category: "lab",
-    year: "LAB",
-    meta: "EXPERIMENT · TUTORIAL",
-    cover: coverPath("mechanical-eye-tutorial"),
-    tags: ["TUTORIAL", "WORKFLOW", "AIGC"],
+    category: "创作实验",
+    tag: "教程 · Workflow",
+    duration: "LAB",
     description: "从生成、镜头设计到剪辑，拆解电影感机械眼短片的完整制作路径。",
-    films: [{ label: "在小红书查看教程", platform: "xiaohongshu", shareUrl: "https://www.xiaohongshu.com/discovery/item/68ee420a00000000070347a9" }],
+    cover: coverPath("mechanical-eye-tutorial"),
+    platform: "xiaohongshu",
+    shareUrl: "https://www.xiaohongshu.com/discovery/item/68ee420a00000000070347a9?source=webshare&xhsshare=pc_web&xsec_token=ABdvwtd0fq7P9xK64_HsgjHj5YjReEhCrPjY4EnZHWHyI=&xsec_source=pc_share",
+    ratio: "16:9",
+    status: "ready",
   },
   {
-    id: "first-last-frame",
     title: "首尾帧教程",
-    titleEn: "FIRST & LAST FRAME",
-    category: "lab",
-    year: "LAB",
-    meta: "EXPERIMENT · TUTORIAL",
-    cover: coverPath("first-last-frame-tutorial"),
-    tags: ["TUTORIAL", "WORKFLOW", "AIGC"],
+    category: "创作实验",
+    tag: "教程 · Workflow",
+    duration: "LAB",
     description: "用首尾帧控制镜头运动、画面转场和生成一致性的实用方法。",
-    films: [{ label: "观看教程", platform: "douyin", videoId: "7560620220017380618", shareUrl: douyinUrl("7560620220017380618") }],
+    cover: coverPath("first-last-frame-tutorial"),
+    platform: "douyin",
+    shareUrl: douyinUrl("7560620220017380618"),
+    douyinVideoId: "7560620220017380618",
+    ratio: "16:9",
+    status: "ready",
   },
 ];
 
-const categories = [
-  { id: "all", label: "ALL", sublabel: "全部作品" },
-  { id: "original", label: "ORIGINAL FILMS", sublabel: "原创影像" },
-  { id: "adaptation", label: "IP & ADAPTATION", sublabel: "IP 改编" },
-  { id: "live-action", label: "LIVE ACTION × AI", sublabel: "实拍 × AI" },
-  { id: "commercial", label: "COMMERCIAL", sublabel: "商业影像" },
-  { id: "lab", label: "LAB", sublabel: "创作实验" },
-];
+const categoryNotes = {
+  原创影像: "从科幻寓言、中式恐怖到亲情与治愈叙事，呈现导演视角与故事能力。",
+  "IP 改编": "从小说、漫画到游戏，以 AI 影像重新进入已有世界。",
+  "实拍 × AI": "让现场摄影、真人表演与 AI 生成在同一套影像语言中协作。",
+  商业影像: "用 AIGC 建立品牌叙事、产品想象与情绪记忆。",
+  创作实验: "记录教程、技术实验与可复用的 AIGC 影像工作流。",
+};
 
-const selectedGrid = document.querySelector("#selectedGrid");
-const liveActionGrid = document.querySelector("#liveActionGrid");
-const workGrid = document.querySelector("#workGrid");
-const filterTabs = document.querySelector("#filterTabs");
-const modal = document.querySelector("#projectModal");
-const modalDialog = document.querySelector(".project-dialog");
-const modalMedia = document.querySelector("#modalMedia");
-const modalEyebrow = document.querySelector("#modalEyebrow");
+const categories = ["原创影像", "IP 改编", "实拍 × AI", "商业影像", "创作实验"];
+
+const categoryEnglish = {
+  原创影像: "ORIGINAL FILMS",
+  "IP 改编": "IP & ADAPTATION",
+  "实拍 × AI": "LIVE ACTION × AI",
+  商业影像: "COMMERCIAL",
+  创作实验: "LAB & TUTORIALS",
+};
+
+const workGroups = categories.map((category) => ({
+  category,
+  note: categoryNotes[category],
+  works: videos
+    .map((video, index) => ({ ...video, index }))
+    .filter((video) => video.category === category),
+}));
+
+const worksGrid = document.querySelector("#worksGrid");
+const categoryNav = document.querySelector("#categoryNav");
+const videoModal = document.querySelector("#videoModal");
+const modalDialog = document.querySelector(".modal-dialog");
+const modalCloseButton = document.querySelector("[data-modal-close]");
+const modalMeta = document.querySelector("#modalMeta");
 const modalTitle = document.querySelector("#modalTitle");
-const modalTitleEn = document.querySelector("#modalTitleEn");
 const modalDescription = document.querySelector("#modalDescription");
-const modalTags = document.querySelector("#modalTags");
-const filmList = document.querySelector("#filmList");
-const toast = document.querySelector("#toast");
-
-let activeCategory = "all";
-let activeProject = null;
+const modalPlayer = document.querySelector("#modalPlayer");
+const mobileToast = document.querySelector("#mobileToast");
 let lastFocusedElement = null;
-let toastTimer = null;
+let mobileToastTimer = null;
+
+categoryNav.innerHTML = categories
+  .map(
+    (category, index) => `
+      <a href="#work-category-${index}">
+        <span>${categoryEnglish[category]}</span>
+        <small>${category}</small>
+      </a>
+    `,
+  )
+  .join("");
 
 const escapeHtml = (value) =>
-  String(value).replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
-  })[character]);
+  String(value).replace(/[&<>"']/g, (character) => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
+    return entities[character];
+  });
 
-const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
-
-const getProject = (id) => projects.find((project) => project.id === id);
-
-const showToast = (message) => {
-  window.clearTimeout(toastTimer);
-  toast.textContent = message;
-  toast.hidden = false;
-  requestAnimationFrame(() => toast.classList.add("toast--visible"));
-  toastTimer = window.setTimeout(() => {
-    toast.classList.remove("toast--visible");
-    window.setTimeout(() => { toast.hidden = true; }, 180);
-  }, 2400);
+const platformLabels = {
+  bilibili: "B站",
+  douyin: "抖音",
+  xiaohongshu: "小红书",
+  kuaishou: "快手",
 };
 
-const renderTags = (tags) => tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
-
-const selectedCardTemplate = (project) => {
-  const sizeClass = project.featured === 1 ? "selected-card--hero" : "";
-  return `
-    <button class="selected-card ${sizeClass}" type="button" data-project-id="${escapeHtml(project.id)}">
-      <span class="selected-card__media">
-        <img src="${escapeHtml(project.cover)}" alt="《${escapeHtml(project.title)}》封面" loading="lazy">
-        <span class="card-shade" aria-hidden="true"></span>
-        <span class="card-number">${String(project.featured).padStart(2, "0")}</span>
-        ${project.badge ? `<span class="series-badge">${escapeHtml(project.badge)}</span>` : ""}
-        <span class="play-mark" aria-hidden="true">▶</span>
-      </span>
-      <span class="selected-card__info">
-        <span class="card-title-en">${escapeHtml(project.titleEn)}</span>
-        <strong>${escapeHtml(project.title)}</strong>
-        <span class="card-meta">${escapeHtml(project.year)} · ${escapeHtml(project.meta)}</span>
-        <span class="card-feature-tag">${escapeHtml(project.tags[0])}</span>
-      </span>
-    </button>
-  `;
+const ratioConfigs = {
+  "16:9": {
+    cssRatio: "16 / 9",
+    dialogClass: "modal-dialog--wide",
+  },
+  "9:16": {
+    cssRatio: "9 / 16",
+    dialogClass: "modal-dialog--portrait",
+  },
+  "4:3": {
+    cssRatio: "4 / 3",
+    dialogClass: "modal-dialog--classic",
+  },
 };
 
-const workCardTemplate = (project) => `
-  <button class="work-card" type="button" data-project-id="${escapeHtml(project.id)}">
-    <span class="work-card__media">
-      <img src="${escapeHtml(project.cover)}" alt="《${escapeHtml(project.title)}》封面" loading="lazy">
-      <span class="card-shade" aria-hidden="true"></span>
-      ${project.badge ? `<span class="series-badge">${escapeHtml(project.badge)}</span>` : ""}
-      <span class="work-card__action">View project <span aria-hidden="true">↗</span></span>
-    </span>
-    <span class="work-card__info">
-      <span class="card-title-en">${escapeHtml(project.titleEn)}</span>
-      <strong>${escapeHtml(project.title)}</strong>
-      <span class="card-meta">${escapeHtml(project.year)} · ${escapeHtml(project.meta)}</span>
-      <span class="work-card__tags">${renderTags(project.tags.slice(0, 2))}</span>
-    </span>
-  </button>
-`;
-
-const liveActionCardTemplate = (project, index) => `
-  <button class="live-action-card" type="button" data-project-id="${escapeHtml(project.id)}">
-    <img src="${escapeHtml(project.cover)}" alt="《${escapeHtml(project.title)}》封面" loading="lazy">
-    <span class="card-shade" aria-hidden="true"></span>
-    <span class="live-action-card__index">0${index + 1}</span>
-    <span class="live-action-card__title"><strong>${escapeHtml(project.title)}</strong><small>${escapeHtml(project.titleEn)}</small></span>
-  </button>
-`;
-
-const renderSelected = () => {
-  selectedGrid.innerHTML = projects
-    .filter((project) => project.featured)
-    .sort((a, b) => a.featured - b.featured)
-    .map(selectedCardTemplate)
-    .join("");
+const getPlatform = (video) => {
+  const supportedPlatforms = ["bilibili", "douyin", "xiaohongshu", "kuaishou"];
+  return supportedPlatforms.includes(video.platform) ? video.platform : "douyin";
 };
 
-const renderLiveAction = () => {
-  const ids = ["mulan", "kundao", "jianlai"];
-  liveActionGrid.innerHTML = ids.map((id, index) => liveActionCardTemplate(getProject(id), index)).join("");
-};
+const getShareUrl = (video) => String(video.shareUrl || video.douyinShareUrl || "").trim();
 
-const renderFilters = () => {
-  filterTabs.innerHTML = categories.map((category) => `
-    <button
-      type="button"
-      class="filter-tab ${category.id === activeCategory ? "filter-tab--active" : ""}"
-      data-category="${escapeHtml(category.id)}"
-      aria-pressed="${category.id === activeCategory}"
-    >
-      <span>${escapeHtml(category.label)}</span>
-      <small>${escapeHtml(category.sublabel)}</small>
-    </button>
-  `).join("");
-};
+const getRatioConfig = (video) => ratioConfigs[video.ratio] || ratioConfigs["16:9"];
 
-const renderWorkIndex = () => {
-  const visibleProjects = activeCategory === "all"
-    ? projects
-    : projects.filter((project) => (
-      project.category === activeCategory
-      || (activeCategory === "live-action" && project.id === "jianlai")
-    ));
-  workGrid.innerHTML = visibleProjects.map(workCardTemplate).join("");
-};
+const isMobilePlaybackRedirect = () =>
+  window.matchMedia("(max-width: 768px), (pointer: coarse) and (max-height: 520px)").matches;
 
-const getEmbedUrl = (film) => {
-  if (film.platform === "douyin" && film.videoId) {
-    return `https://open.douyin.com/player/video?vid=${encodeURIComponent(film.videoId)}&autoplay=0`;
+const getVideoEmbedUrl = (video) => {
+  const platform = getPlatform(video);
+  const bvid = String(video.bvid || "").trim();
+  const douyinVideoId = String(video.douyinVideoId || "").trim();
+
+  if (platform === "bilibili" && bvid) {
+    const encodedBvid = encodeURIComponent(bvid);
+    const page = encodeURIComponent(String(video.page || 1));
+
+    return `https://player.bilibili.com/player.html?bvid=${encodedBvid}&p=${page}&poster=1&autoplay=0&danmaku=0`;
   }
+
+  if (platform === "douyin" && douyinVideoId) {
+    const encodedDouyinVideoId = encodeURIComponent(douyinVideoId);
+
+    return `https://open.douyin.com/player/video?vid=${encodedDouyinVideoId}&autoplay=0`;
+  }
+
   return "";
 };
 
-const clearPlayer = () => {
-  modalMedia.querySelectorAll("iframe").forEach((iframe) => {
-    iframe.src = "about:blank";
-    iframe.remove();
-  });
+const getStatusLabel = (video) => {
+  if (getVideoEmbedUrl(video)) {
+    return "播放作品";
+  }
+
+  if (getShareUrl(video)) {
+    return `在${platformLabels[getPlatform(video)]}打开`;
+  }
+
+  return "视频即将上线";
 };
 
-const playFilm = (project, film) => {
-  if (isMobile()) {
-    if (film.shareUrl) {
-      const opened = window.open(film.shareUrl, "_blank", "noopener,noreferrer");
-      if (!opened) window.location.href = film.shareUrl;
-      return;
-    }
-    showToast("作品视频即将上线");
-    return;
+const getMobileStatusLabel = (video) => {
+  if (getShareUrl(video)) {
+    return `在${platformLabels[getPlatform(video)]}观看`;
   }
 
-  const embedUrl = getEmbedUrl(film);
-  if (!embedUrl) {
-    if (film.shareUrl) {
-      window.open(film.shareUrl, "_blank", "noopener,noreferrer");
-      return;
-    }
-    showToast("作品视频即将上线");
-    return;
-  }
+  return "视频即将上线";
+};
 
-  clearPlayer();
-  modalMedia.innerHTML = "";
+const getIframeTitle = (video) => {
+  return `${video.title} - ${platformLabels[getPlatform(video)]}播放器`;
+};
+
+const createPlayerIframe = (video, embedUrl) => {
   const iframe = document.createElement("iframe");
   iframe.src = embedUrl;
-  iframe.title = `${project.title} · ${film.label}`;
+  iframe.title = getIframeTitle(video);
+  iframe.loading = "lazy";
   iframe.allow = "fullscreen; autoplay; clipboard-write; encrypted-media; picture-in-picture";
   iframe.allowFullscreen = true;
-  modalMedia.append(iframe);
+  iframe.setAttribute("allowfullscreen", "");
 
-  filmList.querySelectorAll("button").forEach((button) => {
-    button.classList.toggle("film-button--active", button.dataset.videoId === film.videoId);
-  });
+  return iframe;
 };
 
-const filmButtonTemplate = (film, index) => `
-  <button
-    class="film-button"
-    type="button"
-    data-film-index="${index}"
-    data-video-id="${escapeHtml(film.videoId || "")}"
-  >
-    <span><strong>${escapeHtml(film.label)}</strong>${film.detail ? `<small>${escapeHtml(film.detail)}</small>` : ""}</span>
-    <span aria-hidden="true">${film.platform === "douyin" ? "Play" : "Open"} ↗</span>
-  </button>
-`;
+const getPendingContent = (video) => {
+  const shareUrl = getShareUrl(video);
 
-const openProject = (project, trigger) => {
-  if (!project) return;
-  activeProject = project;
-  lastFocusedElement = trigger || document.activeElement;
-  modalEyebrow.textContent = `${project.year} / ${categories.find((category) => category.id === project.category)?.label || "PROJECT"}`;
-  modalTitle.textContent = project.title;
-  modalTitleEn.textContent = project.titleEn;
-  modalDescription.textContent = project.description;
-  modalTags.innerHTML = renderTags(project.tags);
-  filmList.innerHTML = project.films.map(filmButtonTemplate).join("");
-  modalMedia.innerHTML = `<img src="${escapeHtml(project.cover)}" alt="《${escapeHtml(project.title)}》封面">`;
-  modal.hidden = false;
+  if (shareUrl) {
+    return {
+      title: "暂未配置站内播放器",
+      body: `可以先在${platformLabels[getPlatform(video)]}原视频页面观看。`,
+      actionLabel: `在${platformLabels[getPlatform(video)]}打开`,
+      actionUrl: shareUrl,
+    };
+  }
+
+  return {
+    title: "视频即将上线",
+    body: "后续填入抖音 VideoID 后即可在这里播放。",
+  };
+};
+
+const buildPendingNotice = (video) => {
+  const pendingContent = getPendingContent(video);
+  const pendingNotice = document.createElement("div");
+  pendingNotice.className = "pending-video";
+
+  const title = document.createElement("strong");
+  title.textContent = pendingContent.title;
+  pendingNotice.append(title);
+
+  const body = document.createElement("span");
+  body.textContent = pendingContent.body;
+  pendingNotice.append(body);
+
+  if (pendingContent.actionUrl) {
+    const action = document.createElement("a");
+    action.className = "pending-video-action";
+    action.href = pendingContent.actionUrl;
+    action.target = "_blank";
+    action.rel = "noreferrer";
+    action.textContent = pendingContent.actionLabel;
+    pendingNotice.append(action);
+  }
+
+  return pendingNotice;
+};
+
+const applyModalRatio = (video) => {
+  const ratioConfig = getRatioConfig(video);
+
+  modalPlayer.style.setProperty("--player-ratio", ratioConfig.cssRatio);
+  modalDialog.classList.add(ratioConfig.dialogClass);
+};
+
+const resetModalRatio = () => {
+  modalPlayer.style.removeProperty("--player-ratio");
+  modalDialog.classList.remove(
+    "modal-dialog--wide",
+    "modal-dialog--portrait",
+    "modal-dialog--classic",
+  );
+};
+
+const renderWorkCard = (work) => {
+  const statusLabel = getStatusLabel(work);
+  const mobileStatusLabel = getMobileStatusLabel(work);
+
+  return `
+    <article class="work-card">
+      <button class="video-frame work-trigger" type="button" data-video-index="${work.index}" aria-label="观看《${escapeHtml(work.title)}》">
+        <img src="${escapeHtml(work.cover)}" alt="《${escapeHtml(work.title)}》封面" loading="lazy">
+        <span class="play-mark" aria-hidden="true"></span>
+        <span class="availability-badge">
+          <span class="label-desktop">${escapeHtml(statusLabel)}</span>
+          <span class="label-mobile">${escapeHtml(mobileStatusLabel)}</span>
+        </span>
+      </button>
+      <div class="work-body">
+        <div class="work-meta">
+          <span class="work-tag">${escapeHtml(work.tag)}</span>
+          <span class="work-duration">${escapeHtml(work.duration)}</span>
+        </div>
+        <h4>${escapeHtml(work.title)}</h4>
+        <p>${escapeHtml(work.description)}</p>
+      </div>
+    </article>
+  `;
+};
+
+worksGrid.innerHTML = workGroups
+  .map(
+    (group, groupIndex) => {
+      const groupId = `work-category-${groupIndex}`;
+      const groupClass = group.works.length > 3
+        ? "work-group work-group--extended"
+        : group.works.length === 2
+          ? "work-group work-group--compact"
+          : "work-group";
+
+      return `
+      <section class="${groupClass}" aria-labelledby="${groupId}">
+        <div class="group-heading">
+          <div>
+            <p class="group-kicker">${categoryEnglish[group.category]} / ${group.works.length} Works</p>
+            <h3 id="${groupId}">${group.category}</h3>
+          </div>
+          <p>${group.note}</p>
+        </div>
+        <div class="category-grid">
+          ${group.works.map(renderWorkCard).join("")}
+        </div>
+      </section>
+    `;
+    },
+  )
+  .join("");
+
+const openVideoModal = (video, trigger) => {
+  const embedUrl = getVideoEmbedUrl(video);
+
+  lastFocusedElement = trigger;
+  modalMeta.textContent = `${video.category} / ${video.tag} / ${platformLabels[getPlatform(video)]}`;
+  modalTitle.textContent = video.title;
+  modalDescription.textContent = video.description;
+  modalPlayer.replaceChildren();
+  applyModalRatio(video);
+  modalPlayer.classList.toggle("modal-player--pending", !embedUrl);
+
+  if (embedUrl) {
+    modalPlayer.append(createPlayerIframe(video, embedUrl));
+  } else {
+    modalPlayer.append(buildPendingNotice(video));
+  }
+
+  videoModal.hidden = false;
   document.body.classList.add("modal-open");
-  requestAnimationFrame(() => modal.classList.add("project-modal--open"));
-  document.querySelector("[data-modal-close]")?.focus({ preventScroll: true });
+  modalCloseButton.focus();
 };
 
-const closeProject = () => {
-  if (modal.hidden) return;
-  clearPlayer();
-  modal.classList.remove("project-modal--open");
+const showMobileToast = (message) => {
+  if (!mobileToast) {
+    return;
+  }
+
+  window.clearTimeout(mobileToastTimer);
+  mobileToast.textContent = message;
+  mobileToast.hidden = false;
+
+  mobileToastTimer = window.setTimeout(() => {
+    mobileToast.hidden = true;
+  }, 2600);
+};
+
+const openExternalVideo = (video) => {
+  const shareUrl = getShareUrl(video);
+
+  if (!shareUrl) {
+    showMobileToast("视频即将上线");
+    return;
+  }
+
+  const externalWindow = window.open(shareUrl, "_blank", "noopener,noreferrer");
+
+  if (!externalWindow) {
+    window.location.href = shareUrl;
+  }
+};
+
+const closeVideoModal = () => {
+  videoModal.hidden = true;
+  modalPlayer.replaceChildren();
+  modalPlayer.classList.remove("modal-player--pending");
+  resetModalRatio();
   document.body.classList.remove("modal-open");
-  activeProject = null;
-  window.setTimeout(() => {
-    modal.hidden = true;
-    modalMedia.innerHTML = "";
-  }, 180);
-  lastFocusedElement?.focus?.({ preventScroll: true });
+  lastFocusedElement?.focus();
+  lastFocusedElement = null;
 };
 
-document.addEventListener("click", (event) => {
-  const projectTrigger = event.target.closest("[data-project-id]");
-  if (projectTrigger) {
-    const project = getProject(projectTrigger.dataset.projectId);
-    if (isMobile() && project?.films.length === 1) {
-      playFilm(project, project.films[0]);
+worksGrid.addEventListener("click", (event) => {
+  const trigger = event.target.closest("[data-video-index]");
+
+  if (!trigger) {
+    return;
+  }
+
+  const video = videos[Number(trigger.dataset.videoIndex)];
+
+  if (video) {
+    if (isMobilePlaybackRedirect() || getPlatform(video) !== "douyin") {
+      openExternalVideo(video);
     } else {
-      openProject(project, projectTrigger);
+      openVideoModal(video, trigger);
     }
-    return;
   }
+});
 
-  const categoryButton = event.target.closest("[data-category]");
-  if (categoryButton) {
-    activeCategory = categoryButton.dataset.category;
-    renderFilters();
-    renderWorkIndex();
-    return;
-  }
+modalCloseButton.addEventListener("click", closeVideoModal);
 
-  const filmButton = event.target.closest("[data-film-index]");
-  if (filmButton && activeProject) {
-    playFilm(activeProject, activeProject.films[Number(filmButton.dataset.filmIndex)]);
-    return;
-  }
-
-  if (event.target.closest("[data-modal-close]") || event.target === modal) {
-    closeProject();
+videoModal.addEventListener("click", (event) => {
+  if (event.target === videoModal) {
+    closeVideoModal();
   }
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") closeProject();
-  if (event.key === "Tab" && !modal.hidden) {
-    const focusable = [...modalDialog.querySelectorAll("button, a, iframe")].filter((element) => !element.disabled);
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
+  if (event.key !== "Escape") {
+    return;
+  }
+
+  if (!videoModal.hidden) {
+    closeVideoModal();
   }
 });
 
-document.querySelectorAll("[data-copy]").forEach((button) => {
-  button.addEventListener("click", async () => {
-    const value = button.dataset.copy;
-    try {
-      await navigator.clipboard.writeText(value);
-      showToast(`已复制：${value}`);
-    } catch {
-      showToast(`联系方式：${value}`);
-    }
-  });
-});
+const copyButton = document.querySelector("[data-copy]");
 
-renderSelected();
-renderLiveAction();
-renderFilters();
-renderWorkIndex();
+copyButton?.addEventListener("click", async () => {
+  const value = copyButton.dataset.copy;
+  const originalText = copyButton.textContent;
+
+  try {
+    await navigator.clipboard.writeText(value);
+    copyButton.textContent = "已复制：lzy57666";
+  } catch {
+    copyButton.textContent = "联系方式：lzy57666";
+  }
+
+  window.setTimeout(() => {
+    copyButton.textContent = originalText;
+  }, 2200);
+});
