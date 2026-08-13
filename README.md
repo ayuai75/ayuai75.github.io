@@ -1,66 +1,72 @@
-# 向AI进击的阿鱼个人主页抖音嵌入测试版
+# 向AI进击的阿鱼 · Director Portfolio
 
-这是独立于 `aiyu-portfolio` 的 GitHub Pages 测试项目，用于验证抖音 iframe 弹窗播放方案。
+个人导演作品档案，发布于 `https://ayuai75.github.io/`。
+
+## 页面结构
+
+- Selected Works：首页精选 8 个项目
+- Live Action × AI：实拍与 AI 制作能力专题
+- Work Index：完整作品档案及五类筛选
+- Awards & Festivals：获奖与入围经历
+- About / Contact：创作者介绍与合作入口
+
+作品一级分类：
+
+- `original`：原创影像
+- `adaptation`：IP 改编
+- `live-action`：实拍 × AI
+- `commercial`：商业影像
+- `lab`：创作实验
+
+获奖、高播放、真人、动画等信息统一放在项目 `tags` 中，不作为一级分类。
 
 ## 本地预览
 
 ```bash
-cd /Users/zhuyu/Documents/Playground/aiyu-portfolio-bilibili
-npm run serve
+cd /Users/zhuyu/Documents/Playground/ayuai75.github.io
+python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
-然后打开 `http://localhost:5175`。
+打开 `http://127.0.0.1:4173/`。
 
-## 视频配置
+## 作品配置
 
-所有作品配置集中在 `app.js` 顶部的 `videos` 数组中。当前版本不使用本地 mp4，也不会跳转到抖音页面。
+所有项目集中在 `app.js` 的 `projects` 数组中。单个项目可以包含一支或多支影像：
 
 ```js
 {
-  title: "作品标题",
-  description: "AIGC 视频作品展示",
-  cover: "./assets/covers/video1.jpg",
-  platform: "douyin",
-  douyinShareUrl: "",
-  douyinVideoId: "",
-  ratio: "16:9",
-  status: "pending",
+  id: "project-id",
+  title: "中文片名",
+  titleEn: "ENGLISH TITLE",
+  category: "original",
+  year: "2026.08",
+  meta: "SCI-FI · 18 MIN",
+  cover: coverPath("cover-file"),
+  tags: ["FLAGSHIP", "SCI-FI", "AI FILM"],
+  description: "项目简介",
+  films: [
+    {
+      label: "观看完整作品",
+      platform: "douyin",
+      videoId: "抖音作品 ID",
+      shareUrl: "https://www.douyin.com/video/抖音作品ID",
+    },
+  ],
 }
 ```
 
-如果只有抖音分享链接，先填入 `douyinShareUrl`：
+`featured: 1` 到 `featured: 8` 控制首页精选作品和顺序。`badge: "3 FILMS"` 用于系列项目角标。
 
-```js
-douyinShareUrl: "https://v.douyin.com/xxxxxx/",
-douyinVideoId: "",
-```
+## 播放策略
 
-此时点击作品会显示：
+- 电脑端：打开项目详情，点击具体影片后才创建抖音 iframe。
+- 手机端：单片项目直接打开公开原视频地址；多片系列先打开站内项目详情供选择。
+- 关闭详情时销毁 iframe，避免后台继续播放。
+- 页面初始不加载任何视频 iframe。
 
-```text
-已添加抖音分享链接，请补充 VideoID 后播放。
-```
+## 资源约定
 
-需要从 PC 端打开该分享链接，等页面跳转到最终地址后，从地址里提取 VideoID，再填入 `douyinVideoId`。
-
-如果已经有抖音 VideoID，直接填写：
-
-```js
-douyinShareUrl: "",
-douyinVideoId: "抖音VideoID",
-```
-
-页面会自动生成抖音播放器地址：
-
-```text
-https://open.douyin.com/player/video?vid=抖音VideoID&autoplay=0
-```
-
-`ratio` 只控制播放器比例，不和平台绑定。支持 `16:9`、`9:16`、`4:3`，未填写时默认使用 `16:9`。
-
-## 仓库说明
-
-这个版本不提交 mp4 视频文件，只保留网页代码和封面图。`.gitignore` 已经忽略：
+封面统一放在 `assets/covers/portfolio/`，优先使用轻量 WebP。仓库不提交本地视频文件：
 
 ```gitignore
 *.mp4
