@@ -4,7 +4,7 @@ const douyinUrl = (videoId) => `https://www.douyin.com/video/${videoId}`;
 const videos = [
   {
     title: "地球上最后一个诗人",
-    category: "原创影像",
+    category: "代表作",
     tag: "代表作 · 科幻",
     duration: "2026.08 · 18 MIN",
     description: "关于记忆、痛苦、存在与救赎的后人类寓言。数字永生成为普遍选择后，一个仍保留感官的人必须决定什么才是人类最后不可删除的部分。",
@@ -43,7 +43,7 @@ const videos = [
   },
   {
     title: "治愈童话",
-    category: "原创影像",
+    category: "IP 改编",
     tag: "动画 · 治愈",
     duration: "2026.07",
     description: "用明亮而柔软的动画世界，讲述相遇、理解与被温柔接住的瞬间。",
@@ -69,7 +69,7 @@ const videos = [
   },
   {
     title: "治愈香蕉猫",
-    category: "原创影像",
+    category: "IP 改编",
     tag: "动画 · 治愈",
     duration: "2026.03",
     description: "在梦境般的糖果森林中，用轻盈动画回应孤独与陪伴。",
@@ -82,7 +82,7 @@ const videos = [
   },
   {
     title: "山的后面",
-    category: "原创影像",
+    category: "获奖作品",
     tag: "获奖 · 真人",
     duration: "2025.10",
     description: "一只流浪猫的独白，用爪尖的自由哲学反衬人类世界的爱与囚笼。",
@@ -95,7 +95,7 @@ const videos = [
   },
   {
     title: "地球上最后一个诗人（2025版）",
-    category: "原创影像",
+    category: "获奖作品",
     tag: "获奖 · 长片",
     duration: "2025.10",
     description: "代表作的最初版本，记录《地球上最后一个诗人》从获奖短片走向新版长片的创作起点。",
@@ -108,7 +108,7 @@ const videos = [
   },
   {
     title: "再踏凌霄",
-    category: "原创影像",
+    category: "获奖作品",
     tag: "获奖 · 动画",
     duration: "2025",
     description: "以动画重访东方神话中的反抗、选择与再次出发。",
@@ -149,7 +149,7 @@ const videos = [
     tag: "漫改 · 动画",
     duration: "2026.05",
     description: "以系列短片进入诡秘世界，在维多利亚式阴影、疯狂与守护者命运之间完成视觉改编。",
-    cover: coverPath("lord-of-mysteries-1"),
+    cover: coverPath("lord-of-mysteries-3"),
     platform: "douyin",
     shareUrl: douyinUrl("7642667180676369699"),
     douyinVideoId: "7642667180676369699",
@@ -157,34 +157,8 @@ const videos = [
     status: "ready",
   },
   {
-    title: "诡秘之主 · Film 02",
-    category: "IP 改编",
-    tag: "漫改 · 动画",
-    duration: "2026.05",
-    description: "延续诡秘世界的阴郁质感，以独立人物切面展开系列化 AI 改编。",
-    cover: coverPath("lord-of-mysteries-2"),
-    platform: "douyin",
-    shareUrl: douyinUrl("7629744274724130067"),
-    douyinVideoId: "7629744274724130067",
-    ratio: "16:9",
-    status: "ready",
-  },
-  {
-    title: "诡秘之主：我们拯救了廷根",
-    category: "IP 改编",
-    tag: "漫改 · 动画",
-    duration: "2026.05",
-    description: "“我们是守护者，也是一群时刻对抗危险和疯狂的可怜虫。”进入廷根守护者的命运切面。",
-    cover: coverPath("lord-of-mysteries-3"),
-    platform: "douyin",
-    shareUrl: douyinUrl("7625852519557713215"),
-    douyinVideoId: "7625852519557713215",
-    ratio: "16:9",
-    status: "ready",
-  },
-  {
     title: "人渣的本愿",
-    category: "IP 改编",
+    category: "原创影像",
     tag: "真人化 · 剧情",
     duration: "2026.03",
     description: "将剧情混剪、真人化与解说叙事结合，重组人物欲望与关系中的隐秘张力。",
@@ -192,19 +166,6 @@ const videos = [
     platform: "douyin",
     shareUrl: douyinUrl("7617555846339267875"),
     douyinVideoId: "7617555846339267875",
-    ratio: "16:9",
-    status: "ready",
-  },
-  {
-    title: "诸神愚戏",
-    category: "IP 改编",
-    tag: "漫改 · 真人",
-    duration: "2025.12",
-    description: "真人版试炼开启，以强风格视觉进入规则、谎言与命运互相纠缠的叙事场。",
-    cover: coverPath("foolish-play-of-gods"),
-    platform: "douyin",
-    shareUrl: douyinUrl("7585570996866829618"),
-    douyinVideoId: "7585570996866829618",
     ratio: "16:9",
     status: "ready",
   },
@@ -223,7 +184,7 @@ const videos = [
   },
   {
     title: "杀了那条龙",
-    category: "IP 改编",
+    category: "获奖作品",
     tag: "游戏二创 · 获奖",
     duration: "2025",
     description: "从游戏世界出发，以女性视角重新书写屠龙、命运和自我选择。",
@@ -300,7 +261,7 @@ const videos = [
   },
   {
     title: "给自己的一封信",
-    category: "商业影像",
+    category: "获奖作品",
     tag: "获奖 · 品牌叙事",
     duration: "动画短片",
     description: "从旧电脑到未来数据海洋，两个时代的自己隔空相望，完成一封关于选择与成长的时光回信。",
@@ -313,7 +274,7 @@ const videos = [
   },
   {
     title: "机械眼教程",
-    category: "创作实验",
+    category: "商业影像",
     tag: "教程 · Workflow",
     duration: "LAB",
     description: "从生成、镜头设计到剪辑，拆解电影感机械眼短片的完整制作路径。",
@@ -325,7 +286,7 @@ const videos = [
   },
   {
     title: "首尾帧教程",
-    category: "创作实验",
+    category: "商业影像",
     tag: "教程 · Workflow",
     duration: "LAB",
     description: "用首尾帧控制镜头运动、画面转场和生成一致性的实用方法。",
@@ -339,21 +300,23 @@ const videos = [
 ];
 
 const categoryNotes = {
-  原创影像: "从科幻寓言、中式恐怖到亲情与治愈叙事，呈现导演视角与故事能力。",
-  "IP 改编": "从小说、漫画到游戏，以 AI 影像重新进入已有世界。",
+  代表作: "18 分钟科幻长片，以后人类寓言建立阿鱼最完整的导演表达与视觉世界。",
+  原创影像: "从中式恐怖、亲情叙事到东方意象，呈现独立的导演视角与故事能力。",
   "实拍 × AI": "让现场摄影、真人表演与 AI 生成在同一套影像语言中协作。",
-  商业影像: "用 AIGC 建立品牌叙事、产品想象与情绪记忆。",
-  创作实验: "记录教程、技术实验与可复用的 AIGC 影像工作流。",
+  "IP 改编": "从小说、漫画到动画角色，以 AI 影像重新进入已有世界。",
+  获奖作品: "汇集赛事获奖与入围作品，记录持续生长的创作路径。",
+  商业影像: "用 AIGC 建立品牌叙事、产品想象，并分享可复用的影像工作流。",
 };
 
-const categories = ["原创影像", "IP 改编", "实拍 × AI", "商业影像", "创作实验"];
+const categories = ["代表作", "原创影像", "实拍 × AI", "IP 改编", "获奖作品", "商业影像"];
 
 const categoryEnglish = {
+  代表作: "FEATURED FILM",
   原创影像: "ORIGINAL FILMS",
-  "IP 改编": "IP & ADAPTATION",
   "实拍 × AI": "LIVE ACTION × AI",
+  "IP 改编": "IP & ADAPTATION",
+  获奖作品: "AWARD-WINNING",
   商业影像: "COMMERCIAL",
-  创作实验: "LAB & TUTORIALS",
 };
 
 const workGroups = categories.map((category) => ({
@@ -551,14 +514,17 @@ const resetModalRatio = () => {
   );
 };
 
-const renderWorkCard = (work) => {
+const renderWorkCard = (work, isFeatured = false) => {
   const statusLabel = getStatusLabel(work);
   const mobileStatusLabel = getMobileStatusLabel(work);
+  const cardClass = isFeatured ? "work-card work-card--featured" : "work-card";
+  const imageLoading = isFeatured ? "eager" : "lazy";
 
   return `
-    <article class="work-card">
+    <article class="${cardClass}">
       <button class="video-frame work-trigger" type="button" data-video-index="${work.index}" aria-label="观看《${escapeHtml(work.title)}》">
-        <img src="${escapeHtml(work.cover)}" alt="《${escapeHtml(work.title)}》封面" loading="lazy">
+        <img src="${escapeHtml(work.cover)}" alt="《${escapeHtml(work.title)}》封面" loading="${imageLoading}">
+        ${isFeatured ? '<span class="featured-mark">FEATURED FILM / 01</span>' : ""}
         <span class="play-mark" aria-hidden="true"></span>
         <span class="availability-badge">
           <span class="label-desktop">${escapeHtml(statusLabel)}</span>
@@ -581,23 +547,21 @@ worksGrid.innerHTML = workGroups
   .map(
     (group, groupIndex) => {
       const groupId = `work-category-${groupIndex}`;
-      const groupClass = group.works.length > 3
-        ? "work-group work-group--extended"
-        : group.works.length === 2
-          ? "work-group work-group--compact"
-          : "work-group";
+      const isFeaturedGroup = group.category === "代表作";
+      const groupClass = isFeaturedGroup ? "work-group work-group--featured" : "work-group";
+      const workLabel = group.works.length === 1 ? "Film" : "Works";
 
       return `
       <section class="${groupClass}" aria-labelledby="${groupId}">
         <div class="group-heading">
           <div>
-            <p class="group-kicker">${categoryEnglish[group.category]} / ${group.works.length} Works</p>
+            <p class="group-kicker">${String(groupIndex + 1).padStart(2, "0")} / ${categoryEnglish[group.category]} / ${group.works.length} ${workLabel}</p>
             <h3 id="${groupId}">${group.category}</h3>
           </div>
           <p>${group.note}</p>
         </div>
         <div class="category-grid">
-          ${group.works.map(renderWorkCard).join("")}
+          ${group.works.map((work) => renderWorkCard(work, isFeaturedGroup)).join("")}
         </div>
       </section>
     `;
