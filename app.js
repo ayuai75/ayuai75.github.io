@@ -46,6 +46,7 @@ const videos = [
   {
     title: "治愈童话",
     category: "IP 改编",
+    order: 4,
     tag: "动画 · 治愈",
     duration: "2026.07",
     description: "用明亮而柔软的动画世界，讲述相遇、理解与被温柔接住的瞬间。",
@@ -73,6 +74,7 @@ const videos = [
   {
     title: "治愈香蕉猫",
     category: "IP 改编",
+    order: 5,
     tag: "动画 · 治愈",
     duration: "2026.03",
     description: "在梦境般的糖果森林中，用轻盈动画回应孤独与陪伴。",
@@ -136,6 +138,7 @@ const videos = [
   {
     title: "末日乐园预告",
     category: "IP 改编",
+    order: 1,
     tag: "小说改编 · 真人",
     duration: "2026.06",
     description: "“规则很简单，活到第一局结束，就算赢。”以真人表演和 AI 世界构建进入末日生存游戏。",
@@ -149,6 +152,7 @@ const videos = [
   {
     title: "诡秘之主 · Film 01",
     category: "IP 改编",
+    order: 2,
     tag: "漫改 · 动画",
     duration: "2026.05",
     description: "以系列短片进入诡秘世界，在维多利亚式阴影、疯狂与守护者命运之间完成视觉改编。",
@@ -176,6 +180,7 @@ const videos = [
   {
     title: "我在怪谈论坛学斩鬼",
     category: "IP 改编",
+    order: 3,
     tag: "漫改 · 动画",
     duration: "2025.12",
     description: "怪谈论坛中的诡事逐渐照进现实，一个普通学生在规则阴影中升级求生。",
@@ -183,6 +188,20 @@ const videos = [
     platform: "douyin",
     shareUrl: douyinUrl("7585179005993766171"),
     douyinVideoId: "7585179005993766171",
+    ratio: "16:9",
+    status: "ready",
+  },
+  {
+    title: "胖橘跨年记",
+    category: "IP 改编",
+    order: 6,
+    tag: "像素风 · 关卡 · IP",
+    duration: "2025.12",
+    description: "以像素游戏关卡重构跨年冒险，让胖橘在热闹宫殿中开启一场轻松诙谐的新年闯关。",
+    cover: "./assets/covers/portfolio/fat-orange-new-year.jpg",
+    platform: "douyin",
+    shareUrl: douyinUrl("7589664775584386304"),
+    douyinVideoId: "7589664775584386304",
     ratio: "16:9",
     status: "ready",
   },
@@ -561,10 +580,6 @@ worksGrid.innerHTML = workGroups
 
       if (["原创影像", "商业影像"].includes(group.category)) {
         groupClasses.push("work-group--two-column");
-      }
-
-      if (group.category === "原创影像") {
-        groupClasses.push("work-group--original");
       }
 
       const groupClass = groupClasses.join(" ");
