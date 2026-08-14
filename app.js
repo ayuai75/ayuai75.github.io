@@ -18,6 +18,7 @@ const videos = [
   {
     title: "喜",
     category: "原创影像",
+    order: 3,
     tag: "中式恐怖 · 高播放",
     duration: "2026.02",
     description: "婚嫁的喜色与民俗阴影彼此吞噬，一则以东方仪式和女性视角展开的中式恐怖短片。",
@@ -31,6 +32,7 @@ const videos = [
   {
     title: "下次已退回",
     category: "原创影像",
+    order: 1,
     tag: "真人 · 亲情",
     duration: "2026.08",
     description: "一段被反复退回的现实，牵出亲情、错过与重新面对彼此的可能。",
@@ -57,6 +59,7 @@ const videos = [
   {
     title: "长徙僧",
     category: "原创影像",
+    order: 4,
     tag: "真人 · 古风",
     duration: "2026.04",
     description: "一个漫长行旅中的古风故事，以克制的人物表演和命运感勾勒精神归途。",
@@ -159,6 +162,7 @@ const videos = [
   {
     title: "人渣的本愿",
     category: "原创影像",
+    order: 2,
     tag: "真人化 · 剧情",
     duration: "2026.03",
     description: "将剧情混剪、真人化与解说叙事结合，重组人物欲望与关系中的隐秘张力。",
@@ -324,7 +328,8 @@ const workGroups = categories.map((category) => ({
   note: categoryNotes[category],
   works: videos
     .map((video, index) => ({ ...video, index }))
-    .filter((video) => video.category === category),
+    .filter((video) => video.category === category)
+    .sort((first, second) => (first.order ?? Number.MAX_SAFE_INTEGER) - (second.order ?? Number.MAX_SAFE_INTEGER)),
 }));
 
 const worksGrid = document.querySelector("#worksGrid");
@@ -554,8 +559,8 @@ worksGrid.innerHTML = workGroups
         groupClasses.push("work-group--featured");
       }
 
-      if (group.category === "商业影像") {
-        groupClasses.push("work-group--commercial");
+      if (["原创影像", "商业影像"].includes(group.category)) {
+        groupClasses.push("work-group--two-column");
       }
 
       const groupClass = groupClasses.join(" ");
