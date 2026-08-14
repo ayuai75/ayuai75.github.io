@@ -120,7 +120,7 @@ const videos = [
   },
   {
     title: "浮生六味",
-    category: "原创影像",
+    category: "获奖作品",
     tag: "东方 · 诗意",
     duration: "2025",
     description: "以六味观浮生，在东方意象和日常感受之间寻找人生的余韵。",
@@ -548,7 +548,17 @@ worksGrid.innerHTML = workGroups
     (group, groupIndex) => {
       const groupId = `work-category-${groupIndex}`;
       const isFeaturedGroup = group.category === "代表作";
-      const groupClass = isFeaturedGroup ? "work-group work-group--featured" : "work-group";
+      const groupClasses = ["work-group"];
+
+      if (isFeaturedGroup) {
+        groupClasses.push("work-group--featured");
+      }
+
+      if (group.category === "商业影像") {
+        groupClasses.push("work-group--commercial");
+      }
+
+      const groupClass = groupClasses.join(" ");
       const workLabel = group.works.length === 1 ? "Film" : "Works";
 
       return `

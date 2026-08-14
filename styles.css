@@ -419,6 +419,10 @@ h2 {
   display: block;
 }
 
+.work-group--commercial .category-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .work-card {
   display: flex;
   flex-direction: column;
@@ -1125,6 +1129,10 @@ h2 {
 
   .category-grid,
   .credits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .work-group--commercial .category-grid {
     grid-template-columns: 1fr;
   }
 
