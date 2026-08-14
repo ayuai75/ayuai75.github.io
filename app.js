@@ -116,7 +116,7 @@ const videos = [
   {
     title: "再踏凌霄",
     category: "获奖作品",
-    order: 3,
+    order: 5,
     tag: "获奖 · 动画",
     duration: "2025",
     description: "以动画重访东方神话中的反抗、选择与再次出发。",
@@ -129,7 +129,7 @@ const videos = [
   {
     title: "浮生六味",
     category: "获奖作品",
-    order: 5,
+    order: 3,
     tag: "东方 · 诗意",
     duration: "2025",
     description: "以六味观浮生，在东方意象和日常感受之间寻找人生的余韵。",
