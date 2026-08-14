@@ -563,6 +563,10 @@ worksGrid.innerHTML = workGroups
         groupClasses.push("work-group--two-column");
       }
 
+      if (group.category === "原创影像") {
+        groupClasses.push("work-group--original");
+      }
+
       const groupClass = groupClasses.join(" ");
       const workLabel = group.works.length === 1 ? "Film" : "Works";
 
