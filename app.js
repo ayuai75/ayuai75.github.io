@@ -88,6 +88,7 @@ const videos = [
   {
     title: "山的后面",
     category: "获奖作品",
+    order: 2,
     tag: "获奖 · 真人",
     duration: "2025.10",
     description: "一只流浪猫的独白，用爪尖的自由哲学反衬人类世界的爱与囚笼。",
@@ -101,6 +102,7 @@ const videos = [
   {
     title: "地球上最后一个诗人（2025版）",
     category: "获奖作品",
+    order: 1,
     tag: "获奖 · 长片",
     duration: "2025.10",
     description: "代表作的最初版本，记录《地球上最后一个诗人》从获奖短片走向新版长片的创作起点。",
@@ -114,6 +116,7 @@ const videos = [
   {
     title: "再踏凌霄",
     category: "获奖作品",
+    order: 3,
     tag: "获奖 · 动画",
     duration: "2025",
     description: "以动画重访东方神话中的反抗、选择与再次出发。",
@@ -126,6 +129,7 @@ const videos = [
   {
     title: "浮生六味",
     category: "获奖作品",
+    order: 5,
     tag: "东方 · 诗意",
     duration: "2025",
     description: "以六味观浮生，在东方意象和日常感受之间寻找人生的余韵。",
@@ -208,6 +212,7 @@ const videos = [
   {
     title: "杀了那条龙",
     category: "获奖作品",
+    order: 4,
     tag: "游戏二创 · 获奖",
     duration: "2025",
     description: "从游戏世界出发，以女性视角重新书写屠龙、命运和自我选择。",
@@ -285,6 +290,7 @@ const videos = [
   {
     title: "给自己的一封信",
     category: "获奖作品",
+    order: 6,
     tag: "获奖 · 品牌叙事",
     duration: "动画短片",
     description: "从旧电脑到未来数据海洋，两个时代的自己隔空相望，完成一封关于选择与成长的时光回信。",
